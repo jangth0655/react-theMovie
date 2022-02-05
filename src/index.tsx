@@ -3,22 +3,21 @@ import ReactDOM from "react-dom";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import App from "./App";
 import { lightTheme } from "./theme";
-import app from "./firebase/firebase";
 import { Provider } from "react-redux";
 import { store } from "./store";
-
-console.log(app);
+import "./index.css";
 
 const GlobalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
 /* variable */
-:root {
+#root {
 	/* font-size */
 	--font-size-micro : "0.875em";
 	--font-size-small : "1em";
 	--font-size-regular : "1.25em";
 	--font-size-large : "2em";
 
-	/* Icon-szie */
+	/* Icon-size */
 	--icon-size-small:"0.875em";
 	--icon-size-middle:"1.25em";
 	--icon-size-large:"1.75em";
@@ -63,8 +62,13 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+* { 
+	box-sizing: border-box;
+}
+
 body {
 	line-height: 1;
+	font-family: 'Open Sans', sans-serif;
 }
 ol, ul {
 	list-style: none;

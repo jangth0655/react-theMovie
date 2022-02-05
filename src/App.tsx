@@ -19,21 +19,21 @@ function App() {
   const login = useAppSelector((state) => state.IsLoginSlice.isLogin);
   return (
     <Router>
-      {login && <Nav />}
-      {login ? (
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/movies/nowPlaying" element={<NowMovie />} />
-          <Route path="/movies/upComing" element={<UpComing />} />
-          <Route path="/tv/airingToday" element={<AiringToday />} />
-          <Route path="/tv/onTheAir" element={<OnTheAir />} />
-          <Route path="/actors" element={<Actors />} />
-        </Routes>
-      ) : (
-        <Routes>
-          <Route path="/" element={<Auth />} />
-        </Routes>
-      )}
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        {login ? (
+          <>
+            <Route path="movies/nowPlaying" element={<NowMovie />} />
+            <Route path="movies/upComing" element={<UpComing />} />
+            <Route path="tv/airingToday" element={<AiringToday />} />
+            <Route path="tv/onTheAir" element={<OnTheAir />} />
+            <Route path="actors" element={<Actors />} />
+          </>
+        ) : (
+          <Route path="/auth" element={<Auth />} />
+        )}
+      </Routes>
     </Router>
   );
 }

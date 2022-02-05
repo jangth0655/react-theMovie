@@ -8,7 +8,7 @@
 - Skills : React, Typescript, FireBase
 - Tools : react-router, styled-components, Redux, motion, react-hook-form
 
-### #### Specific Feature
+### Specific Feature
 
 - 로그인 기능
 - Navbar : 개봉예정, 현재 상영 중인 영화,TV프로그램과 인기있는 인물

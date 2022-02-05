@@ -1,10 +1,79 @@
 import { signOut } from "firebase/auth";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { auth } from "../firebase/firebase";
 import { isLogout } from "../slices/IsLoginSlice";
-import { useAppDispatch } from "../store";
+import { useAppDispatch, useAppSelector } from "../store";
+import NavbarTap from "./NavbarTap";
+
+const Navbar = styled.nav`
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  background-color: ${(props) => props.theme.color.darkColor};
+  color: ${(props) => props.theme.color.whiteColor};
+`;
+
+const ColOne = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 40%;
+`;
+
+const ColTwo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 60%;
+`;
+
+const Logo = styled.svg`
+  color: ${(props) => props.theme.color.active};
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.8em;
+`;
+
+const Name = styled.div`
+  & span {
+    font-size: 0.875rem;
+  }
+`;
+
+const Page = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+`;
+
+const LoginBtn = styled.button`
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: ${(props) => props.theme.color.whiteColor};
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
+export enum pageTap {
+  movie = "Movie",
+  tv = "TV",
+  actor = "Actor",
+}
+
+const tapContents = [
+  { id: pageTap.movie, one: "현재 상영", two: "계봉 예정" },
+  { id: pageTap.tv, one: "현재 방영", two: "오늘 방영" },
+  { id: pageTap.actor, one: "인기 배우" },
+];
 
 const Nav = () => {
+  const login = useAppSelector((state) => state.IsLoginSlice.isLogin);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const onLogout = () => {
@@ -13,12 +82,41 @@ const Nav = () => {
     dispatch(isLogout(false));
   };
 
+  const onLogin = () => {
+    login ? navigate("/") : navigate("/auth");
+  };
+
   return (
-    <>
-      <h1>Nav</h1>
-      <button onClick={onLogout}>Logout</button>
-      <Link to="/movies/nowPlaying">Movies</Link>
-    </>
+    <Navbar>
+      <ColOne>
+        <Logo
+          focusable="false"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 576 512"
+        >
+          <path
+            fill="currentColor"
+            d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+          ></path>
+        </Logo>
+        <Name>
+          <span>The Movie</span>
+        </Name>
+      </ColOne>
+      <ColTwo>
+        <Page>
+          {tapContents.map((tap, i) => (
+            <NavbarTap key={i} {...tap}></NavbarTap>
+          ))}
+        </Page>
+        {login ? (
+          <LoginBtn onClick={onLogout}>Logout</LoginBtn>
+        ) : (
+          <LoginBtn onClick={onLogin}>Login</LoginBtn>
+        )}
+      </ColTwo>
+    </Navbar>
   );
 };
 export default Nav;
