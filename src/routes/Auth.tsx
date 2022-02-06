@@ -13,10 +13,6 @@ import { useAppDispatch } from "../store";
 const GOOGLE = "google";
 const GITHUB = "github";
 
-const GoogleBtn = styled.button``;
-
-const GithubBtn = styled.button``;
-
 const Auth = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -28,6 +24,7 @@ const Auth = () => {
       }
     });
   }, [dispatch]);
+  console.log(auth.currentUser);
 
   const onSocialClick = (e: React.FormEvent<HTMLButtonElement>) => {
     const {
@@ -52,18 +49,48 @@ const Auth = () => {
     await signInWithPopup(auth, provider);
   };
 
-  console.log(auth.currentUser);
+  const Main = styled.main`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+  `;
+  const ButtonBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    & button:first-child {
+      margin-bottom: 30px;
+    }
+  `;
+  const ProviderBtn = styled.button`
+    font-size: 1.25em;
+    cursor: pointer;
+    padding: 2em;
+    width: 100%;
+    border-radius: 10px;
+    background-color: ${(props) => props.theme.color.main};
+    border: 0;
+    outline: 0;
+    color: white;
+    transition: all 0.2s ease-in;
+    &:hover {
+      background-color: ${(props) => props.theme.color.darkColor};
+    }
+  `;
   return (
-    <div>
-      <div>
-        <GoogleBtn onClick={onSocialClick} name="google">
+    <Main>
+      <ButtonBox>
+        <ProviderBtn onClick={onSocialClick} name="google">
           Continue width Google
-        </GoogleBtn>
-        <GithubBtn onClick={onSocialClick} name="github">
+        </ProviderBtn>
+        <ProviderBtn onClick={onSocialClick} name="github">
           Continue width Github
-        </GithubBtn>
-      </div>
-    </div>
+        </ProviderBtn>
+      </ButtonBox>
+    </Main>
   );
 };
 

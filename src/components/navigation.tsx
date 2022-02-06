@@ -1,7 +1,5 @@
 import { signOut } from "firebase/auth";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase/firebase";
 import { isLogout } from "../slices/IsLoginSlice";
@@ -9,6 +7,8 @@ import { useAppDispatch, useAppSelector } from "../store";
 import NavbarTap from "./NavbarTap";
 
 const Navbar = styled.nav`
+  position: fixed;
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 1em;
@@ -30,6 +30,7 @@ const ColTwo = styled.div`
 `;
 
 const Logo = styled.svg`
+  cursor: pointer;
   color: ${(props) => props.theme.color.active};
   width: 1.5em;
   height: 1.5em;
@@ -44,7 +45,7 @@ const Name = styled.div`
 
 const Page = styled.ul`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   width: 70%;
 `;
@@ -61,35 +62,41 @@ const LoginBtn = styled.button`
 `;
 
 export enum pageTap {
-  movie = "Movie",
-  tv = "TV",
-  actor = "Actor",
+  Movie = "Movie",
+  TV = "TV",
+  Actor = "Actor",
 }
 
 const tapContents = [
-  { id: pageTap.movie, one: "현재 상영", two: "계봉 예정" },
-  { id: pageTap.tv, one: "현재 방영", two: "오늘 방영" },
-  { id: pageTap.actor, one: "인기 배우" },
+  { id: pageTap.Movie, one: "현재 상영", two: "계봉 예정" },
+  { id: pageTap.TV, one: "현재 방영", two: "오늘 방영" },
+  { id: pageTap.Actor, one: "인기 배우" },
 ];
 
 const Nav = () => {
   const login = useAppSelector((state) => state.IsLoginSlice.isLogin);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const onLogout = () => {
     signOut(auth);
-    navigate("/");
     dispatch(isLogout(false));
+  };
+
+  const goHomePage = () => {
+    navigate("/");
   };
 
   const onLogin = () => {
     login ? navigate("/") : navigate("/auth");
   };
+  console.log(login);
 
   return (
     <Navbar>
       <ColOne>
         <Logo
+          onClick={goHomePage}
           focusable="false"
           role="img"
           xmlns="http://www.w3.org/2000/svg"

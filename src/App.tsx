@@ -21,9 +21,9 @@ function App() {
     <Router>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
         {login ? (
           <>
+            <Route path="/" element={<Home />}></Route>
             <Route path="movies/nowPlaying" element={<NowMovie />} />
             <Route path="movies/upComing" element={<UpComing />} />
             <Route path="tv/airingToday" element={<AiringToday />} />
@@ -31,7 +31,10 @@ function App() {
             <Route path="actors" element={<Actors />} />
           </>
         ) : (
-          <Route path="/auth" element={<Auth />} />
+          <>
+            <Route path="/" element={<Auth />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
         )}
       </Routes>
     </Router>
