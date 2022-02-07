@@ -1,4 +1,5 @@
 import { signOut } from "firebase/auth";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase/firebase";
@@ -7,11 +8,11 @@ import { useAppDispatch, useAppSelector } from "../store";
 import NavbarTap from "./NavbarTap";
 
 const Navbar = styled.nav`
+  padding: 0 1em;
   position: fixed;
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1em;
   background-color: ${(props) => props.theme.color.darkColor};
   color: ${(props) => props.theme.color.whiteColor};
 `;
@@ -29,7 +30,7 @@ const ColTwo = styled.div`
   flex: 60%;
 `;
 
-const Logo = styled.svg`
+const Logo = styled(motion.svg)`
   cursor: pointer;
   color: ${(props) => props.theme.color.active};
   width: 1.5em;
@@ -61,6 +62,15 @@ const LoginBtn = styled.button`
   }
 `;
 
+const logoVariants = {
+  end: {
+    opacity: [1, 0, 1],
+    transition: {
+      repeat: Infinity,
+    },
+  },
+};
+
 export enum pageTap {
   Movie = "Movie",
   TV = "TV",
@@ -87,16 +97,13 @@ const Nav = () => {
     navigate("/");
   };
 
-  const onLogin = () => {
-    login ? navigate("/") : navigate("/auth");
-  };
-  console.log(login);
-
   return (
     <Navbar>
       <ColOne>
         <Logo
           onClick={goHomePage}
+          variants={logoVariants}
+          whileHover="end"
           focusable="false"
           role="img"
           xmlns="http://www.w3.org/2000/svg"
@@ -114,14 +121,10 @@ const Nav = () => {
       <ColTwo>
         <Page>
           {tapContents.map((tap, i) => (
-            <NavbarTap key={i} {...tap}></NavbarTap>
+            <NavbarTap key={i} {...tap} />
           ))}
         </Page>
-        {login ? (
-          <LoginBtn onClick={onLogout}>Logout</LoginBtn>
-        ) : (
-          <LoginBtn onClick={onLogin}>Login</LoginBtn>
-        )}
+        {login && <LoginBtn onClick={onLogout}>Logout</LoginBtn>}
       </ColTwo>
     </Navbar>
   );

@@ -1,8 +1,9 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useAppSelector } from "../store";
+
+import { pageTap } from "./navigation";
 
 interface ITapContents {
   id: string;
@@ -11,6 +12,7 @@ interface ITapContents {
 }
 
 const PageLi = styled(motion.li)`
+  padding: 1.2em;
   position: relative;
   margin: auto;
   font-size: 0.875rem;
@@ -21,7 +23,7 @@ const PageLi = styled(motion.li)`
   }
 `;
 
-const PageName = styled(motion.p)``;
+const PageName = styled.p``;
 
 const TapBox = styled(motion.div)`
   background-color: ${(props) => props.theme.color.whiteColor};
@@ -56,7 +58,6 @@ const TapContents = styled.p`
 const NavbarTap = ({ ...tap }: ITapContents) => {
   const [showingContents, setShowingContents] = useState(false);
   const navigate = useNavigate();
-  const login = useAppSelector((state) => state.IsLoginSlice.isLogin);
   const onTap = () => {
     setShowingContents(true);
   };
@@ -64,27 +65,54 @@ const NavbarTap = ({ ...tap }: ITapContents) => {
     setShowingContents(false);
   };
 
-  const onNavigate = () => {
-    navigate("movies/nowPlaying");
+  const onNavigateOne = (one: string) => {
+    switch (one) {
+      case pageTap.Movie:
+        navigate("movies/nowPlaying");
+        break;
+      case pageTap.TV:
+        navigate("tv/onTheAir");
+        break;
+      case pageTap.Actor:
+        navigate("actors");
+        break;
+      default:
+        navigate("/");
+    }
+  };
+  const onNavigateTwo = (two: string) => {
+    switch (two) {
+      case pageTap.Movie:
+        navigate("movies/upComing");
+        break;
+      case pageTap.TV:
+        navigate("tv/airingToday");
+        break;
+      default:
+        navigate("/");
+    }
   };
   return (
-    <PageLi onHoverStart={onTap}>
+    <PageLi onHoverStart={onTap} onHoverEnd={onHoverEnd}>
       <PageName>{tap.id}</PageName>
-      {showingContents ? (
+      {showingContents && (
         <TapBox
           initial={{ scaleY: 0 }}
           animate={{ scaleY: 1 }}
           transition={{ type: "tween" }}
         >
-          <TapContents>
-            <Link to="movies/nowPlaying">{tap.one}</Link>
+          <TapContents onClick={() => onNavigateOne(tap.id)}>
+            {tap.one}
           </TapContents>
 
-          <TapContents>{tap.two ? tap.two : null}</TapContents>
+          {tap.two && (
+            <TapContents onClick={() => onNavigateTwo(tap.id)}>
+              {tap.two && tap.two}
+            </TapContents>
+          )}
         </TapBox>
-      ) : null}
+      )}
     </PageLi>
   );
 };
-
 export default NavbarTap;
