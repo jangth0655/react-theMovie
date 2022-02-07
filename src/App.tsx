@@ -43,10 +43,7 @@ function App() {
 
 export default App;
 
-/* 
-    <Route path="/movies/nowPlaying" element={<NowMovie />} />
-        <Route path="/movies/upComing" element={<UpComing />} />
-        <Route path="/tv/airingToday" element={<AiringToday />} />
-        <Route path="/tv/onTheAir" element={<OnTheAir />} />
-        <Route path="/actors" element={<Actors />} />
+/* Home page에서 firebase를 통해 로그인을 하면 login 불린 값이 true설정되며 리덕스로 관리가 됩니다. 하지만 기타 다른 페이지로 이동하고 나서 새로고침을 하게되면 login 값이 다시 false로 변경되여 
+router가 경로를 match하지 못하게 된다는 이슈가 있었습니다. 이를 위해 Home page로 리다이렉트 하여 
+해결하였습니다.
 */

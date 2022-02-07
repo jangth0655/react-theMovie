@@ -1,13 +1,6 @@
 const NowMovie = () => {
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div>
       <h1>NowMovies</h1>
     </div>
   );

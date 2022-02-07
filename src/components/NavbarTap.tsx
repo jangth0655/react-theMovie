@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 import { pageTap } from "./navigation";
 
 interface ITapContents {
@@ -15,7 +14,7 @@ const PageLi = styled(motion.li)`
   padding: 1.2em;
   position: relative;
   margin: auto;
-  font-size: 0.875rem;
+  font-size: var(--font-size-micro);
   cursor: pointer;
   transition: all 0.2s ease-in;
   &:hover {
@@ -47,8 +46,8 @@ const TapContents = styled.p`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 0.5em;
-  font-size: 0.875rem;
+  padding: var(--padding-size-small);
+  font-size: var(--font-size-micro);
   color: black;
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);

@@ -13,6 +13,39 @@ import { useAppDispatch } from "../store";
 const GOOGLE = "google";
 const GITHUB = "github";
 
+const Main = styled.main`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  & button:first-child {
+    margin-bottom: var(--margin-size-large);
+  }
+`;
+const ProviderBtn = styled.button`
+  font-size: var(--font-size-regular);
+  cursor: pointer;
+  padding: var(--padding-size-large);
+  width: 100%;
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.color.main};
+  border: 0;
+  outline: 0;
+  color: white;
+  transition: all 0.2s ease-in;
+  &:hover {
+    background-color: ${(props) => props.theme.color.darkColor};
+  }
+`;
+
 const Auth = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -49,37 +82,6 @@ const Auth = () => {
     await signInWithPopup(auth, provider);
   };
 
-  const Main = styled.main`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
-  `;
-  const ButtonBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    & button:first-child {
-      margin-bottom: 30px;
-    }
-  `;
-  const ProviderBtn = styled.button`
-    font-size: 1.25em;
-    cursor: pointer;
-    padding: 2em;
-    width: 100%;
-    border-radius: 10px;
-    background-color: ${(props) => props.theme.color.main};
-    border: 0;
-    outline: 0;
-    color: white;
-    transition: all 0.2s ease-in;
-    &:hover {
-      background-color: ${(props) => props.theme.color.darkColor};
-    }
-  `;
   return (
     <Main>
       <ButtonBox>
