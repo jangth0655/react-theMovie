@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getPopularMovies } from "../actions/PopularMovies";
+import { MovieDeTailPages } from "../actions/DetailPage";
+import { getPopularMovies, getPopularTV } from "../actions/PopularMovies";
+import LoadingState from "../components/LoadingState";
 import { useAppDispatch, useAppSelector } from "../store";
+import makeImage from "../utility/utility";
 
 const Main = styled.main``;
 
@@ -57,33 +61,86 @@ const Button = styled.button`
 
 const SectionTwo = styled.section`
   padding: var(--padding-size-large);
-  background-color: red;
 `;
 
-const SlideName = styled.p``;
+const SlideBox = styled.div`
+  margin-bottom: var(--margin-size-large);
+`;
+
+const SlideName = styled.p`
+  font-size: var(--font-size-large);
+`;
 
 const Slide = styled.div``;
 
-const RowItems = styled.div``;
+const RowItems = styled.div`
+  overflow-x: scroll;
+  display: flex;
+`;
+
+const RowItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: var(--margin-size-meddle);
+  padding: 2em 0;
+`;
+
+const ItemImg = styled.div<{ bgPoster: string }>`
+  cursor: pointer;
+  width: 10em;
+  height: 15em;
+  overflow-x: scroll;
+  background-image: url(${(props) => props.bgPoster});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: var(--border-radius);
+  margin-bottom: var(--margin-size-small);
+`;
+
+const ItemDescription = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 10em;
+`;
+
+const ItemTitle = styled.p`
+  width: 100%;
+  font-weight: 600;
+`;
+
+const ItemRelease = styled.p`
+  margin-top: var(--margin-size-small);
+  font-size: var(--font-size-micro);
+  color: rgba(0, 0, 0, 0.5);
+`;
 
 const Home = () => {
+  const navigator = useNavigate();
   const dispatch = useAppDispatch();
   const loadingState = useAppSelector(
     (state) => state.popularSlice.loadingState
   );
   const popularMovies = useAppSelector((state) => state.popularSlice.movieData);
+  const popularTVs = useAppSelector((state) => state.popularSlice.tvData);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  console.log(popularMovies);
-  console.log(loadingState);
-
   useEffect(() => {
     dispatch(getPopularMovies());
+    dispatch(getPopularTV());
   }, [dispatch]);
+
+  const onMovieDetail = (id: number) => {
+    navigator(`movies/${id}`);
+    dispatch(MovieDeTailPages(id));
+    console.log(id);
+  };
 
   const onSubmit = () => {};
   return (
@@ -103,12 +160,53 @@ const Home = () => {
         </Form>
       </SectionOne>
 
-      <SectionTwo>
-        <SlideName>Popular Movies</SlideName>
-        <Slide>
-          <RowItems></RowItems>
-        </Slide>
-      </SectionTwo>
+      {loadingState ? (
+        <LoadingState></LoadingState>
+      ) : (
+        <SectionTwo>
+          {/* movies */}
+          <SlideBox>
+            <SlideName>Popular Movies</SlideName>
+            <Slide>
+              <RowItems>
+                {popularMovies.map((movie) => (
+                  <RowItem
+                    onClick={() => onMovieDetail(movie.id)}
+                    key={movie.id}
+                  >
+                    <ItemImg
+                      bgPoster={makeImage(movie.poster_path, "w500")}
+                    ></ItemImg>
+                    <ItemDescription>
+                      <ItemTitle>{movie.title}</ItemTitle>
+                      <ItemRelease>{movie.release_date}</ItemRelease>
+                    </ItemDescription>
+                  </RowItem>
+                ))}
+              </RowItems>
+            </Slide>
+            {/* tvs */}
+          </SlideBox>
+          <SlideBox>
+            <SlideName>Popular TV Programs</SlideName>
+            <Slide>
+              <RowItems>
+                {popularTVs.map((tv) => (
+                  <RowItem key={tv.id}>
+                    <ItemImg
+                      bgPoster={makeImage(tv.poster_path, "w500")}
+                    ></ItemImg>
+                    <ItemDescription>
+                      <ItemTitle>{tv.name}</ItemTitle>
+                      <ItemRelease>{tv.first_air_date}</ItemRelease>
+                    </ItemDescription>
+                  </RowItem>
+                ))}
+              </RowItems>
+            </Slide>
+          </SlideBox>
+        </SectionTwo>
+      )}
     </Main>
   );
 };

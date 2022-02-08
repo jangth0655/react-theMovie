@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getPopularMovies,
+  getPopularTV,
   IPopularMovies,
   IPopularMoviesResults,
+  IPopularTVResults,
+  IPopularTVs,
 } from "../actions/PopularMovies";
 
 const initialState = {
   movieData: [] as IPopularMoviesResults[],
-  tvData: [],
+  tvData: [] as IPopularTVResults[],
   loadingState: true,
 };
 
@@ -17,6 +20,7 @@ export const popularSlice = createSlice({
   reducers: {},
 
   extraReducers: (builder) => {
+    //movie
     builder.addCase(
       getPopularMovies.pending,
       (state, action: PayloadAction<void>) => {
@@ -31,6 +35,21 @@ export const popularSlice = createSlice({
       }
     );
     builder.addCase(getPopularMovies.rejected, (state, action) => {});
+    // tv
+    builder.addCase(
+      getPopularTV.pending,
+      (state, action: PayloadAction<void>) => {
+        state.loadingState = true;
+      }
+    );
+    builder.addCase(
+      getPopularTV.fulfilled,
+      (state, action: PayloadAction<IPopularTVs>) => {
+        state.tvData = action.payload.results;
+        state.loadingState = false;
+      }
+    );
+    builder.addCase(getPopularTV.rejected, (state, action) => {});
   },
 });
 

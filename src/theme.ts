@@ -6,6 +6,7 @@ export const lightTheme: DefaultTheme = {
     active: "#FF57A2",
     darkColor: "#001559",
     whiteColor: "#FFFFFF",
+    yellowColor: "#F9F871",
   },
 };
 
@@ -15,5 +16,6 @@ export const darkTheme: DefaultTheme = {
     active: "asdf",
     darkColor: "asdf",
     whiteColor: "#FFFFFF",
+    yellowColor: "#F9F871",
   },
 };

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../store";
 import NavbarTap from "./NavbarTap";
 
 const Navbar = styled.nav`
+  z-index: 1;
   padding: 0 1em;
   position: fixed;
   width: 100%;

@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
 	--margin-size-large : 1.5em;
 
 	/* border-radius */
-	--border-radius : 6.25; 
+	--border-radius : 10px; 
 }
 
 html, body, div, span, applet, object, iframe,
@@ -63,10 +63,11 @@ footer, header, hgroup, menu, nav, section {
 }
 * { 
 	box-sizing: border-box;
+	line-height: 1.2;
 }
 
 body {
-	line-height: 1;
+	
 	font-family: 'Open Sans', sans-serif;
 }
 
