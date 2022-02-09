@@ -57,7 +57,6 @@ const Auth = () => {
       }
     });
   }, [dispatch]);
-  console.log(auth.currentUser);
 
   const onSocialClick = (e: React.FormEvent<HTMLButtonElement>) => {
     const {

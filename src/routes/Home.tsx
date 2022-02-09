@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { MovieDeTailPages } from "../actions/DetailPage";
-import { getPopularMovies, getPopularTV } from "../actions/PopularMovies";
+import { MovieDeTailPagesAPI, TvDetailPagesAPI } from "../actions/DetailPage";
+import { getPopularMovies, getPopularTV } from "../actions/PopularAPIs";
 import LoadingState from "../components/LoadingState";
 import { useAppDispatch, useAppSelector } from "../store";
 import makeImage from "../utility/utility";
@@ -138,8 +138,12 @@ const Home = () => {
 
   const onMovieDetail = (id: number) => {
     navigator(`movies/${id}`);
-    dispatch(MovieDeTailPages(id));
-    console.log(id);
+    dispatch(MovieDeTailPagesAPI(id));
+  };
+
+  const onTvDetail = (id: number) => {
+    navigator(`tv/${id}`);
+    dispatch(TvDetailPagesAPI(id));
   };
 
   const onSubmit = () => {};
@@ -192,7 +196,7 @@ const Home = () => {
             <Slide>
               <RowItems>
                 {popularTVs.map((tv) => (
-                  <RowItem key={tv.id}>
+                  <RowItem key={tv.id} onClick={() => onTvDetail(tv.id)}>
                     <ItemImg
                       bgPoster={makeImage(tv.poster_path, "w500")}
                     ></ItemImg>

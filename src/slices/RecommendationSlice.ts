@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  getPopularMovies,
-  getPopularTV,
   IPopularMovies,
   IPopularMoviesResults,
   IPopularTVResults,
   IPopularTVs,
 } from "../actions/PopularAPIs";
+import {
+  movieRecommendation,
+  TvRecommendation,
+} from "../actions/RecommendationAPIs";
 
 const initialState = {
   movieData: [] as IPopularMoviesResults[],
@@ -14,43 +16,43 @@ const initialState = {
   loadingState: true,
 };
 
-export const popularSlice = createSlice({
-  name: "popular",
+export const RecommendationSlice = createSlice({
+  name: "Recommendation",
   initialState,
   reducers: {},
-
   extraReducers: (builder) => {
     //movie
     builder.addCase(
-      getPopularMovies.pending,
+      movieRecommendation.pending,
       (state, action: PayloadAction<void>) => {
         state.loadingState = true;
       }
     );
     builder.addCase(
-      getPopularMovies.fulfilled,
+      movieRecommendation.fulfilled,
       (state, action: PayloadAction<IPopularMovies>) => {
         state.movieData = [...action.payload.results];
         state.loadingState = false;
       }
     );
-    builder.addCase(getPopularMovies.rejected, (state, action) => {});
-    // tv
+    builder.addCase(movieRecommendation.rejected, (state, action) => {});
+
+    //tv
     builder.addCase(
-      getPopularTV.pending,
+      TvRecommendation.pending,
       (state, action: PayloadAction<void>) => {
         state.loadingState = true;
       }
     );
     builder.addCase(
-      getPopularTV.fulfilled,
+      TvRecommendation.fulfilled,
       (state, action: PayloadAction<IPopularTVs>) => {
-        state.tvData = action.payload.results;
+        state.tvData = [...action.payload.results];
         state.loadingState = false;
       }
     );
-    builder.addCase(getPopularTV.rejected, (state, action) => {});
+    builder.addCase(TvRecommendation.rejected, (state, action) => {});
   },
 });
 
-export default popularSlice.reducer;
+export default RecommendationSlice.reducer;
