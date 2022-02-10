@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MovieDeTailPagesAPI, TvDetailPagesAPI } from "../actions/DetailPage";
 import { getPopularMovies, getPopularTV } from "../actions/PopularAPIs";
+import { SearchAPIs } from "../actions/SearchAPIs";
 import LoadingState from "../components/LoadingState";
 import { useAppDispatch, useAppSelector } from "../store";
 import makeImage from "../utility/utility";
@@ -117,6 +118,10 @@ const ItemRelease = styled.p`
   color: rgba(0, 0, 0, 0.5);
 `;
 
+interface IValue {
+  value: string;
+}
+
 const Home = () => {
   const navigator = useNavigate();
   const dispatch = useAppDispatch();
@@ -127,6 +132,7 @@ const Home = () => {
   const popularTVs = useAppSelector((state) => state.popularSlice.tvData);
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -146,7 +152,12 @@ const Home = () => {
     dispatch(TvDetailPagesAPI(id));
   };
 
-  const onSubmit = () => {};
+  const onValid = (data: any) => {
+    setValue("value", "");
+    navigator(`/search?keyword=${data.value}`);
+    dispatch(SearchAPIs(data.value));
+  };
+
   return (
     <Main>
       <SectionOne>
@@ -155,7 +166,7 @@ const Home = () => {
             <Description>Shoot for the moon</Description>
           </TitleBox>
         </HomeImage>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onValid)}>
           <Input
             {...register("value", { required: true })}
             placeholder="영화, TV 프로그램, 인물 검색 ..."

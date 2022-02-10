@@ -24,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
 	--icon-size-big:2.5em;
 
 	/* padding */
+	--padding-size-main :  6em 3em 3em 3em;;
 	--padding-size-small : 0.5em;
 	--padding-size-meddle : 1em;
 	--padding-size-large : 1.5em;
@@ -35,6 +36,9 @@ const GlobalStyle = createGlobalStyle`
 
 	/* border-radius */
 	--border-radius : 10px; 
+	/* image-size */
+	--image-width : 10em;
+	--image-height : 15em;
 }
 
 

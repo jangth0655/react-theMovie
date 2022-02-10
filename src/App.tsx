@@ -12,7 +12,8 @@ import Home from "./routes/Home";
 import MovieDetail from "./routes/movies/MovieDetail";
 import NowMovie from "./routes/movies/NowMovie";
 import UpComing from "./routes/movies/UpComing";
-import AiringToday from "./routes/tv/Airing_today";
+import Search from "./routes/Search";
+import AiringToday from "./routes/tv/AiringToday";
 import OnTheAir from "./routes/tv/On_the_air";
 import TVDetail from "./routes/tv/TVDetail";
 import { useAppSelector } from "./store";
@@ -34,10 +35,10 @@ function App() {
             <Route path="tv/airingToday" element={<AiringToday />} />
             <Route path="tv/onTheAir" element={<OnTheAir />} />
             <Route path="tv/:id" element={<TVDetail />} />
+            <Route path="search" element={<Search />} />
             <Route />
             {/* actors */}
             <Route path="actors" element={<Actors />} />
-            <Route path="actors/:id" />
           </>
         ) : (
           <>

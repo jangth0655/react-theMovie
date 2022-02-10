@@ -1,5 +1,119 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { movieUpComing } from "../../actions/UpcomingAPIs";
+import { useAppDispatch, useAppSelector } from "../../store";
+import makeImage from "../../utility/utility";
+
+const Main = styled.main`
+  padding: var(--padding-size-main);
+`;
+
+const MainTitle = styled.p`
+  font-size: var(--font-size-large);
+  padding: var(--padding-size-small);
+`;
+
+const MovieList = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  gap: 0.5em;
+`;
+
+const MovieItem = styled.li`
+  padding: var(--padding-size-small);
+`;
+
+const ItemImage = styled.div<{ bgPoster: string }>`
+  cursor: pointer;
+  width: var(--image-width);
+  height: var(--image-height);
+  background-image: url(${(props) => props.bgPoster});
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: var(--border-radius);
+  margin-bottom: var(--margin-size-small);
+`;
+
+const ItemDescription = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 10em;
+  margin-bottom: var(--margin-size-small);
+`;
+
+const ItemTitle = styled.p`
+  width: 100%;
+  font-weight: 600;
+`;
+
+const ItemDate = styled.p`
+  margin-top: var(--margin-size-small);
+  font-size: var(--font-size-micro);
+  color: rgba(0, 0, 0, 0.5);
+`;
+
+const VoteAverage = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const VoteAverageP = styled.p`
+  margin-right: var(--margin-size-small);
+`;
+
+const VoteAverageScore = styled.p`
+  text-align: center;
+`;
+
 const UpComing = () => {
-  return <h1>UpComings</h1>;
+  const navigator = useNavigate();
+  const nowMovies = useAppSelector((state) => state.UpcomingSlice.movieData);
+  const loading = useAppSelector((state) => state.NowPlayingSlice.loadingState);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(movieUpComing());
+  }, [dispatch]);
+
+  const onDetailPage = (id: number) => {
+    navigator(`/movies/${id}`);
+  };
+
+  return (
+    <Main>
+      {loading ? (
+        "Loading..."
+      ) : (
+        <>
+          <MainTitle>계봉 예정 영화</MainTitle>
+          <MovieList>
+            {nowMovies.map((item) => (
+              <MovieItem key={item.id}>
+                <ItemImage
+                  onClick={() => onDetailPage(item.id)}
+                  bgPoster={makeImage(item.poster_path)}
+                ></ItemImage>
+                <ItemDescription>
+                  <ItemTitle>{item.title}</ItemTitle>
+                  <ItemDate>{item.release_date}</ItemDate>
+                </ItemDescription>
+                <VoteAverage>
+                  <VoteAverageP>평점</VoteAverageP>
+                  <VoteAverageScore>{item.vote_average}</VoteAverageScore>
+                </VoteAverage>
+              </MovieItem>
+            ))}
+          </MovieList>
+        </>
+      )}
+    </Main>
+  );
 };
 
 export default UpComing;

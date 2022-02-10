@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { tvNowPlaying } from "../../actions/NowplayingAPIs";
+import { AiringTodayAPIs } from "../../actions/AiringTodayAPIs";
+
 import { useAppDispatch, useAppSelector } from "../../store";
 import makeImage from "../../utility/utility";
 
@@ -72,14 +73,20 @@ const VoteAverageScore = styled.p`
   text-align: center;
 `;
 
-const OnTheAir = () => {
+const AiringToday = () => {
   const navigator = useNavigate();
-  const nowTvProgram = useAppSelector((state) => state.NowPlayingSlice.tvData);
-  const loading = useAppSelector((state) => state.NowPlayingSlice.loadingState);
+  const airingTodayProgram = useAppSelector(
+    (state) => state.AiringTodaySlice.tvData
+  );
+  const loading = useAppSelector(
+    (state) => state.AiringTodaySlice.loadingState
+  );
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(tvNowPlaying());
+    dispatch(AiringTodayAPIs());
   }, [dispatch]);
+
+  console.log(airingTodayProgram);
 
   const onDetailPage = (id: number) => {
     navigator(`/tv/${id}`);
@@ -93,7 +100,7 @@ const OnTheAir = () => {
         <>
           <TvTitle>현재 방영 TV프로그램</TvTitle>
           <TvList>
-            {nowTvProgram.map((item) => (
+            {airingTodayProgram.map((item) => (
               <TvItem key={item.id}>
                 <ItemImage
                   onClick={() => onDetailPage(item.id)}
@@ -116,4 +123,4 @@ const OnTheAir = () => {
   );
 };
 
-export default OnTheAir;
+export default AiringToday;
