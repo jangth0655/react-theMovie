@@ -12,16 +12,27 @@ const Main = styled.main`
 const TvTitle = styled.p`
   font-size: var(--font-size-large);
   padding: var(--padding-size-small);
+  margin-bottom: var(--margin-size-meddle);
+  @media screen and (max-width: 64em) {
+    font-size: var(--font-size-large);
+  }
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-regular);
+    text-align: center;
+  }
 `;
 
 const TvList = styled.ul`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   gap: 0.5em;
+  @media screen and (max-width: 48em) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const TvItem = styled.li`
@@ -82,7 +93,7 @@ const OnTheAir = () => {
   }, [dispatch]);
 
   const onDetailPage = (id: number) => {
-    navigator(`/tv/${id}`);
+    navigator(`/tv-detail/${id}`);
   };
 
   return (

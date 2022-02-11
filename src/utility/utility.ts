@@ -1,4 +1,4 @@
-const makeImage = (poster: string, width?: string) => {
+const makeImage = (poster?: string, width?: string) => {
   return `https://image.tmdb.org/t/p/${width ? width : "w500"}/${poster}`;
 };
 

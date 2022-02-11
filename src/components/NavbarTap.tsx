@@ -67,10 +67,10 @@ const NavbarTap = ({ ...tap }: ITapContents) => {
   const onNavigateOne = (one: string) => {
     switch (one) {
       case pageTap.Movie:
-        navigate("movies/nowPlaying");
+        navigate("movies/now-playing");
         break;
       case pageTap.TV:
-        navigate("tv/onTheAir");
+        navigate("tvs/on-the-air");
         break;
       case pageTap.Actor:
         navigate("actors");
@@ -82,10 +82,10 @@ const NavbarTap = ({ ...tap }: ITapContents) => {
   const onNavigateTwo = (two: string) => {
     switch (two) {
       case pageTap.Movie:
-        navigate("movies/upComing");
+        navigate("movies/up-coming");
         break;
       case pageTap.TV:
-        navigate("tv/airingToday");
+        navigate("tvs/airing-today");
         break;
       default:
         navigate("/");

@@ -11,6 +11,7 @@ export interface IPopularMoviesResults {
   overview: string;
   vote_average: number;
   release_date: string;
+  media_type: string;
 }
 
 export interface IPopularMovies {
@@ -29,6 +30,7 @@ export interface IPopularTVResults {
   overview: string;
   vote_average: number;
   first_air_date: string;
+  media_type: string;
 }
 
 export interface IPopularTVs {

@@ -41,7 +41,7 @@ const Logo = styled(motion.svg)`
 
 const Name = styled.div`
   & span {
-    font-size: 0.875rem;
+    font-size: var(--font-size-micro);
   }
 `;
 

@@ -12,7 +12,11 @@ import makeImage from "../utility/utility";
 const Main = styled.main``;
 
 const SectionOne = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: var(--margin-size-large);
+  height: 60vh;
 `;
 
 const HomeImage = styled.div`
@@ -20,7 +24,7 @@ const HomeImage = styled.div`
   justify-content: center;
   align-items: flex-end;
   width: 100%;
-  height: 500px;
+  height: 100%;
   background-image: url(https://cdn.dribbble.com/users/31629/screenshots/17102576/media/93d66dc088259f09424c91bc5ccb5472.png?compress=1&resize=800x600&vertical=top);
   background-position: center;
   background-repeat: no-repeat;
@@ -29,35 +33,45 @@ const HomeImage = styled.div`
 
 const TitleBox = styled.div`
   position: relative;
-  margin-bottom: 7em;
+  margin-bottom: var(--margin-size-large);
 `;
 
 const Description = styled.h1`
   margin-top: var(--margin-size-meddle);
-  font-weight: 400;
+  font-weight: 600;
   font-style: italic;
-  font-size: var(--font-size-regular);
+  font-size: var(--font-size-large);
   color: ${(props) => props.theme.color.main};
 `;
 
 const Form = styled.form`
   position: relative;
-  width: 100%;
+  width: 70%;
   text-align: center;
+  border: 2px solid ${(props) => props.theme.color.main};
+  border-radius: 50px;
+  display: flex;
+  padding: 0.5em 1em;
+  @media screen and (max-width: 48em) {
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`
   outline: 0;
-  padding: 0.5em 1em;
-  width: 70%;
-  border: 2px solid ${(props) => props.theme.color.main};
   border-radius: 50px;
+  border: 0;
+  width: 70%;
 `;
 
 const Button = styled.button`
   cursor: pointer;
   background-color: transparent;
   border: 0;
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 const SectionTwo = styled.section`
@@ -70,6 +84,9 @@ const SlideBox = styled.div`
 
 const SlideName = styled.p`
   font-size: var(--font-size-large);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-regular);
+  }
 `;
 
 const Slide = styled.div``;
@@ -110,6 +127,9 @@ const ItemDescription = styled.div`
 const ItemTitle = styled.p`
   width: 100%;
   font-weight: 600;
+  @media screen and (max-width: 64em) {
+    font-size: var(--font-size-small);
+  }
 `;
 
 const ItemRelease = styled.p`
@@ -135,7 +155,7 @@ const Home = () => {
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<IValue>();
 
   useEffect(() => {
     dispatch(getPopularMovies());
@@ -143,16 +163,16 @@ const Home = () => {
   }, [dispatch]);
 
   const onMovieDetail = (id: number) => {
-    navigator(`movies/${id}`);
+    navigator(`/movie-detail/${id}`);
     dispatch(MovieDeTailPagesAPI(id));
   };
 
   const onTvDetail = (id: number) => {
-    navigator(`tv/${id}`);
+    navigator(`tvs/tv-detail/${id}`);
     dispatch(TvDetailPagesAPI(id));
   };
 
-  const onValid = (data: any) => {
+  const onValid = (data: IValue) => {
     setValue("value", "");
     navigator(`/search?keyword=${data.value}`);
     dispatch(SearchAPIs(data.value));
@@ -166,10 +186,14 @@ const Home = () => {
             <Description>Shoot for the moon</Description>
           </TitleBox>
         </HomeImage>
-        <Form onSubmit={handleSubmit(onValid)}>
+        <Form onSubmit={handleSubmit<IValue>(onValid)}>
           <Input
-            {...register("value", { required: true })}
-            placeholder="영화, TV 프로그램, 인물 검색 ..."
+            {...register("value", { required: "Please, Write your Keyword" })}
+            placeholder={
+              errors.value?.message
+                ? errors.value.message
+                : "영화, TV 프로그램, 인물 검색 ..."
+            }
           />
           <Button>Search</Button>
         </Form>
@@ -185,11 +209,9 @@ const Home = () => {
             <Slide>
               <RowItems>
                 {popularMovies.map((movie) => (
-                  <RowItem
-                    onClick={() => onMovieDetail(movie.id)}
-                    key={movie.id}
-                  >
+                  <RowItem key={movie.id}>
                     <ItemImg
+                      onClick={() => onMovieDetail(movie.id)}
                       bgPoster={makeImage(movie.poster_path, "w500")}
                     ></ItemImg>
                     <ItemDescription>

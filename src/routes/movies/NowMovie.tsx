@@ -12,16 +12,24 @@ const Main = styled.main`
 const MainTitle = styled.p`
   font-size: var(--font-size-large);
   padding: var(--padding-size-small);
+  margin-bottom: var(--margin-size-meddle);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-regular);
+    text-align: center;
+  }
 `;
 
 const MovieList = styled.ul`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   gap: 0.5em;
+  @media screen and (max-width: 48em) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const MovieItem = styled.li`
@@ -82,7 +90,7 @@ const NowMovie = () => {
   }, [dispatch]);
 
   const onDetailPage = (id: number) => {
-    navigator(`/movies/${id}`);
+    navigator(`/movie-detail/${id}`);
   };
 
   return (

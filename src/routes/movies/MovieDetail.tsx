@@ -18,6 +18,10 @@ const SectionOne = styled.section<{ background: string }>`
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+    height: 70vh;
+  }
 `;
 
 const Cover = styled.div`
@@ -33,13 +37,20 @@ const MovieIntro = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  @media screen and (max-width: 48em) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 `;
 
 const MoviePoster = styled(motion.div)`
   margin-right: var(--margin-size-meddle);
   flex: 30%;
-  width: 300px;
-  height: 500px;
+  width: 18.75em;
+  height: 31.25em;
+  @media screen and (max-width: 48em) {
+    flex: 40%;
+  }
 `;
 
 const PosterImg = styled.div<{ poster: string }>`
@@ -54,6 +65,9 @@ const PosterImg = styled.div<{ poster: string }>`
 
 const MovieDescription = styled.div`
   flex: 70%;
+  @media screen and (max-width: 48em) {
+    flex: 60%;
+  }
 `;
 
 const MovieTitle = styled.div`
@@ -65,10 +79,16 @@ const Title = styled.p`
   color: ${(props) => props.theme.color.yellowColor};
   font-size: var(--font-size-large);
   margin-bottom: var(--margin-size-small);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-regular);
+  }
 `;
 
 const TitleSubInfo = styled.div`
   margin-bottom: var(--margin-size-meddle);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
 `;
 
 const Release = styled.p`
@@ -94,6 +114,9 @@ const VoteAverage = styled.div`
 
 const VoteAverageP = styled.p`
   margin-right: var(--margin-size-small);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
 `;
 
 const VoteAverageScore = styled.div`
@@ -101,12 +124,18 @@ const VoteAverageScore = styled.div`
   width: fit-content;
   border: 2px solid ${(props) => props.theme.color.main};
   border-radius: 50%;
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
 `;
 
 const OverView = styled.p`
   line-height: 1.4;
   color: ${(props) => props.theme.color.whiteColor};
   font-size: var(--font-size-small);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
 `;
 
 const MovieTrailer = styled.div`
@@ -146,6 +175,10 @@ const PlayVideoBox = styled(motion.div)`
   border-radius: var(--border-radius);
   background-color: black;
   color: white;
+  @media screen and (max-width: 48em) {
+    width: 30em;
+    height: 25em;
+  }
 `;
 
 // section two
@@ -160,10 +193,17 @@ const SectionTwo = styled.section`
   padding: 3em;
 `;
 
-const Recommendation = styled.div``;
+const Recommendation = styled.div`
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
+`;
 
 const RecommendationName = styled.p`
   font-size: var(--font-size-large);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-regular);
+  }
 `;
 
 const RecommendationList = styled.ul`
@@ -181,6 +221,9 @@ const RecommendationDescription = styled.div`
 const RecommendationTitle = styled.p`
   width: 100%;
   font-weight: 600;
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-small);
+  }
 `;
 
 const RecommendationItem = styled.li`
@@ -207,7 +250,7 @@ const MovieDetail = () => {
   const titleRef = useRef<HTMLParagraphElement>(null);
   const navigator = useNavigate();
   const [play, setPlay] = useState(false);
-  const movieMatch = useMatch("/movies/:id");
+  const movieMatch = useMatch("/movie-detail/:id");
   const dispatch = useAppDispatch();
   const movieVideo = useAppSelector((state) => state.VideoSlice.videoData);
   const movieDetailItem = useAppSelector((state) => state.Details.MovieDetails);
@@ -229,7 +272,7 @@ const MovieDetail = () => {
   };
 
   const onDetailPage = (id: number) => {
-    navigator(`/movies/${id}`);
+    navigator(`/movie-detail/${id}`);
     titleRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "end",

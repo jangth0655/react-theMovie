@@ -10,6 +10,7 @@ export interface ISearchResults {
   overview: string;
   title: string;
   release_date: string;
+  media_type: string;
 }
 
 export interface ISearch {

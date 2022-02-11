@@ -12,45 +12,72 @@ const Main = styled.main`
 const MainTitle = styled.p`
   font-size: var(--font-size-large);
   padding: var(--padding-size-small);
+  margin-bottom: var(--margin-size-meddle);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-regular);
+    text-align: center;
+  }
 `;
 
 const ActorList = styled.ul`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   gap: 0.5em;
+  @media screen and (max-width: 48em) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const ActorLi = styled.li`
-  padding: var(--padding-size-small);
+  width: 10em;
+  -webkit-box-shadow: 0px 5px 9px 0px #000000;
+  box-shadow: 0px 5px 9px 0px #000000;
+  border-radius: var(--border-radius);
+  margin-bottom: var(--margin-size-small);
 `;
 
 const ActorImage = styled.div<{ bgPoster: string }>`
-  cursor: pointer;
+  width: 100%;
   width: var(--image-width);
   height: var(--image-height);
   background-image: url(${(props) => props.bgPoster});
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
   margin-bottom: var(--margin-size-small);
 `;
 
 const ActorDescription = styled.div`
+  padding: var(--padding-size-small);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 10em;
   margin-bottom: var(--margin-size-small);
 `;
 
 const ActorName = styled.p`
   width: 100%;
   font-weight: 600;
+  font-size: var(--font-size-micro);
+`;
+
+const ActorKnownForBox = styled.ul`
+  margin-top: var(--margin-size-small);
+  display: flex;
+  flex-direction: column;
+  overflow-x: scroll;
+`;
+
+const ActorKnownFor = styled.li`
+  width: fit-content;
+  display: flex;
+  font-size: var(--font-size-micro);
+  color: rgba(0, 0, 0, 0.6);
 `;
 
 const Actors = () => {
@@ -76,6 +103,13 @@ const Actors = () => {
                 ></ActorImage>
                 <ActorDescription>
                   <ActorName>{actor.name}</ActorName>
+                  <ActorKnownForBox>
+                    {actor.known_for.slice(0, 1).map((item) => (
+                      <ActorKnownFor key={item.id}>
+                        {item.title ? `${item.title}...` : ""}
+                      </ActorKnownFor>
+                    ))}
+                  </ActorKnownForBox>
                 </ActorDescription>
               </ActorLi>
             ))}

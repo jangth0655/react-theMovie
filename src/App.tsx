@@ -28,13 +28,13 @@ function App() {
           <>
             {/* movie */}
             <Route path="/" element={<Home />}></Route>
-            <Route path="movies/nowPlaying" element={<NowMovie />} />
-            <Route path="movies/upComing" element={<UpComing />} />
-            <Route path="movies/:id" element={<MovieDetail />} />
+            <Route path="movies/now-playing" element={<NowMovie />} />
+            <Route path="movies/up-coming" element={<UpComing />} />
+            <Route path="movie-detail/:id" element={<MovieDetail />} />
             {/* tv */}
-            <Route path="tv/airingToday" element={<AiringToday />} />
-            <Route path="tv/onTheAir" element={<OnTheAir />} />
-            <Route path="tv/:id" element={<TVDetail />} />
+            <Route path="tvs/airing-today" element={<AiringToday />} />
+            <Route path="tvs/on-the-air" element={<OnTheAir />} />
+            <Route path="tv-detail/:id" element={<TVDetail />} />
             <Route path="search" element={<Search />} />
             <Route />
             {/* actors */}

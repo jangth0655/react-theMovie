@@ -18,6 +18,10 @@ const SectionOne = styled.section<{ background: string }>`
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+    height: 70vh;
+  }
 `;
 
 const Cover = styled.div`
@@ -33,6 +37,10 @@ const TvIntro = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  @media screen and (max-width: 48em) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 `;
 
 const TvPoster = styled(motion.div)`
@@ -40,6 +48,9 @@ const TvPoster = styled(motion.div)`
   flex: 30%;
   width: 300px;
   height: 500px;
+  @media screen and (max-width: 48em) {
+    flex: 40%;
+  }
 `;
 
 const PosterImg = styled.div<{ poster: string }>`
@@ -54,6 +65,9 @@ const PosterImg = styled.div<{ poster: string }>`
 
 const TvDescription = styled.div`
   flex: 70%;
+  @media screen and (max-width: 48em) {
+    flex: 60%;
+  }
 `;
 
 const TvTitle = styled.div`
@@ -65,10 +79,16 @@ const Title = styled.p`
   color: ${(props) => props.theme.color.yellowColor};
   font-size: var(--font-size-large);
   margin-bottom: var(--margin-size-small);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-regular);
+  }
 `;
 
 const TitleSubInfo = styled.div`
   margin-bottom: var(--margin-size-meddle);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
 `;
 
 const Release = styled.p`
@@ -94,6 +114,9 @@ const VoteAverage = styled.div`
 
 const VoteAverageP = styled.p`
   margin-right: var(--margin-size-small);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
 `;
 
 const VoteAverageScore = styled.div`
@@ -101,12 +124,18 @@ const VoteAverageScore = styled.div`
   width: fit-content;
   border: 2px solid ${(props) => props.theme.color.main};
   border-radius: 50%;
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
 `;
 
 const OverView = styled.p`
   line-height: 1.4;
   color: ${(props) => props.theme.color.whiteColor};
   font-size: var(--font-size-small);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
 `;
 
 const TvTrailer = styled.div`
@@ -146,6 +175,10 @@ const PlayVideoBox = styled(motion.div)`
   border-radius: var(--border-radius);
   background-color: black;
   color: white;
+  @media screen and (max-width: 48em) {
+    width: 30em;
+    height: 25em;
+  }
 `;
 
 // section two
@@ -153,10 +186,17 @@ const SectionTwo = styled.section`
   padding: 3em;
 `;
 
-const Recommendation = styled.div``;
+const Recommendation = styled.div`
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-micro);
+  }
+`;
 
 const RecommendationName = styled.p`
   font-size: var(--font-size-large);
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-regular);
+  }
 `;
 
 const RecommendationList = styled.ul`
@@ -174,6 +214,9 @@ const RecommendationDescription = styled.div`
 const RecommendationTitle = styled.p`
   width: 100%;
   font-weight: 600;
+  @media screen and (max-width: 48em) {
+    font-size: var(--font-size-small);
+  }
 `;
 
 const RecommendationItem = styled.li`
@@ -203,7 +246,7 @@ const TVDetails = () => {
     (state) => state.RecommendationSlice.tvData
   );
   const [play, setPlay] = useState(false);
-  const tvMatch = useMatch("/tv/:id");
+  const tvMatch = useMatch("tv-detail/:id");
   const dispatch = useAppDispatch();
   const tvVideo = useAppSelector((state) => state.VideoSlice.tvData);
   const tvDetailItem = useAppSelector((state) => state.Details.TvDetails);
@@ -222,7 +265,7 @@ const TVDetails = () => {
   };
 
   const onDetailPage = (id: number) => {
-    navigator(`/tv/${id}`);
+    navigator(`/tv-detail/${id}`);
     titleRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "end",
@@ -259,15 +302,11 @@ const TVDetails = () => {
                 <VoteAverageP>평점</VoteAverageP>
                 <VoteAverageScore>{tvDetailItem.vote_average}</VoteAverageScore>
               </VoteAverage>
-              <OverView>
-                {tvDetailItem.overview ? (
-                  `${tvDetailItem.overview.slice(0, 120)}...`
-                ) : (
-                  <>
-                    <NoItems word="Sorry, There are no items" />
-                  </>
-                )}
-              </OverView>
+              {tvDetailItem.overview ? (
+                <OverView>`${tvDetailItem.overview.slice(0, 120)}...`</OverView>
+              ) : (
+                <NoItems word="Sorry, There are no items" />
+              )}
               <TvTrailer>
                 <Trailer>Trailer</Trailer>
                 <TrailerPlay onClick={onVideoPlay}>

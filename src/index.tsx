@@ -36,12 +36,11 @@ const GlobalStyle = createGlobalStyle`
 
 	/* border-radius */
 	--border-radius : 10px; 
+
 	/* image-size */
 	--image-width : 10em;
 	--image-height : 15em;
 }
-
-
 `;
 
 ReactDOM.render(
