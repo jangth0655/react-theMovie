@@ -6,9 +6,14 @@ import {
   IActorsResults,
 } from "../actions/ActorPopularAPIs";
 
+interface IError {
+  message: string;
+}
+
 const initialState = {
   actorData: [] as IActorsResults[],
   loadingState: true,
+  error: {} as IError,
 };
 
 export const ActorSlice = createSlice({
@@ -26,7 +31,9 @@ export const ActorSlice = createSlice({
         state.loadingState = false;
       }
     );
-    builder.addCase(ActorAPIs.rejected, (state, action) => {});
+    builder.addCase(ActorAPIs.rejected, (state, action: PayloadAction<any>) => {
+      state.error = action.payload;
+    });
   },
 });
 

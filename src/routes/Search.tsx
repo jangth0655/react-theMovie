@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import LoadingState from "../components/LoadingState";
 import NoItems from "../components/Noiitem";
 import { useAppSelector } from "../store";
 import makeImage from "../utility/utility";
@@ -67,43 +68,41 @@ const Search = () => {
     }
   };
 
-  return (
+  return loading ? (
+    <LoadingState />
+  ) : (
     <Main>
-      {loading ? (
-        "loading...."
-      ) : (
-        <ItemList>
-          {items.map((item) => (
-            <ItemLi key={item.id}>
-              <ItemImage
-                onClick={() => onDetailPage(item.media_type, item.id)}
-                bgPoster={makeImage(item.poster_path)}
-              ></ItemImage>
-              <ItemDescription>
-                {item.title ? (
-                  <ItemTitle>{item.title}</ItemTitle>
-                ) : (
-                  <>
-                    <NoItems word=" There is no Title "></NoItems>
-                  </>
-                )}
+      <ItemList>
+        {items.map((item) => (
+          <ItemLi key={item.id}>
+            <ItemImage
+              onClick={() => onDetailPage(item.media_type, item.id)}
+              bgPoster={makeImage(item.poster_path)}
+            ></ItemImage>
+            <ItemDescription>
+              {item.title ? (
+                <ItemTitle>{item.title}</ItemTitle>
+              ) : (
+                <>
+                  <NoItems word=" There is no Title "></NoItems>
+                </>
+              )}
 
-                <ItemDate>{item.release_date}</ItemDate>
-                {item.overview ? (
-                  <ItemOverview>{`${item.overview.slice(
-                    0,
-                    100
-                  )}...`}</ItemOverview>
-                ) : (
-                  <>
-                    <NoItems word="Sorry, There is no overview "></NoItems>
-                  </>
-                )}
-              </ItemDescription>
-            </ItemLi>
-          ))}
-        </ItemList>
-      )}
+              <ItemDate>{item.release_date}</ItemDate>
+              {item.overview ? (
+                <ItemOverview>{`${item.overview.slice(
+                  0,
+                  100
+                )}...`}</ItemOverview>
+              ) : (
+                <>
+                  <NoItems word="Sorry, There is no overview "></NoItems>
+                </>
+              )}
+            </ItemDescription>
+          </ItemLi>
+        ))}
+      </ItemList>
     </Main>
   );
 };

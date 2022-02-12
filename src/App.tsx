@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 import Nav from "./components/navigation";
 import Actors from "./routes/actors/Actors";
 import Auth from "./routes/Auth";
@@ -17,37 +18,41 @@ import AiringToday from "./routes/tv/AiringToday";
 import OnTheAir from "./routes/tv/On_the_air";
 import TVDetail from "./routes/tv/TVDetail";
 import { useAppSelector } from "./store";
+import { lightTheme, darkTheme } from "./theme";
 
 function App() {
+  const darkMode = useAppSelector((state) => state.DarkModeSlice.isDark);
   const login = useAppSelector((state) => state.IsLoginSlice.isLogin);
   return (
-    <Router>
-      <Nav />
-      <Routes>
-        {login ? (
-          <>
-            {/* movie */}
-            <Route path="/" element={<Home />}></Route>
-            <Route path="movies/now-playing" element={<NowMovie />} />
-            <Route path="movies/up-coming" element={<UpComing />} />
-            <Route path="movie-detail/:id" element={<MovieDetail />} />
-            {/* tv */}
-            <Route path="tvs/airing-today" element={<AiringToday />} />
-            <Route path="tvs/on-the-air" element={<OnTheAir />} />
-            <Route path="tv-detail/:id" element={<TVDetail />} />
-            <Route path="search" element={<Search />} />
-            <Route />
-            {/* actors */}
-            <Route path="actors" element={<Actors />} />
-          </>
-        ) : (
-          <>
-            <Route path="/" element={<Auth />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </>
-        )}
-      </Routes>
-    </Router>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <Router>
+        <Nav />
+        <Routes>
+          {login ? (
+            <>
+              {/* movie */}
+              <Route path="/" element={<Home />}></Route>
+              <Route path="movies/now-playing" element={<NowMovie />} />
+              <Route path="movies/up-coming" element={<UpComing />} />
+              <Route path="movie-detail/:id" element={<MovieDetail />} />
+              {/* tv */}
+              <Route path="tvs/airing-today" element={<AiringToday />} />
+              <Route path="tvs/on-the-air" element={<OnTheAir />} />
+              <Route path="tv-detail/:id" element={<TVDetail />} />
+              <Route path="search" element={<Search />} />
+              <Route />
+              {/* actors */}
+              <Route path="actors" element={<Actors />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Auth />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </>
+          )}
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

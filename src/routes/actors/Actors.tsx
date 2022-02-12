@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import styled from "styled-components";
 import { ActorAPIs } from "../../actions/ActorPopularAPIs";
+import LoadingState from "../../components/LoadingState";
 import { useAppDispatch, useAppSelector } from "../../store";
 import makeImage from "../../utility/utility";
 
@@ -82,40 +83,35 @@ const ActorKnownFor = styled.li`
 
 const Actors = () => {
   const dispatch = useAppDispatch();
+  //const errors = useAppSelector((state) => state.ActorSlice.error);
   const actors = useAppSelector((state) => state.ActorSlice.actorData);
   const loading = useAppSelector((state) => state.ActorSlice.loadingState);
   useEffect(() => {
     dispatch(ActorAPIs());
   }, [dispatch]);
 
-  return (
+  return loading ? (
+    <LoadingState></LoadingState>
+  ) : (
     <Main>
-      {loading ? (
-        "loading..."
-      ) : (
-        <>
-          <MainTitle>인기배우</MainTitle>
-          <ActorList>
-            {actors.map((actor) => (
-              <ActorLi key={actor.id}>
-                <ActorImage
-                  bgPoster={makeImage(actor.profile_path)}
-                ></ActorImage>
-                <ActorDescription>
-                  <ActorName>{actor.name}</ActorName>
-                  <ActorKnownForBox>
-                    {actor.known_for.slice(0, 1).map((item) => (
-                      <ActorKnownFor key={item.id}>
-                        {item.title ? `${item.title}...` : ""}
-                      </ActorKnownFor>
-                    ))}
-                  </ActorKnownForBox>
-                </ActorDescription>
-              </ActorLi>
-            ))}
-          </ActorList>
-        </>
-      )}
+      <MainTitle>인기배우</MainTitle>
+      <ActorList>
+        {actors.map((actor) => (
+          <ActorLi key={actor.id}>
+            <ActorImage bgPoster={makeImage(actor.profile_path)}></ActorImage>
+            <ActorDescription>
+              <ActorName>{actor.name}</ActorName>
+              <ActorKnownForBox>
+                {actor.known_for.slice(0, 1).map((item) => (
+                  <ActorKnownFor key={item.id}>
+                    {item.title ? `${item.title}...` : ""}
+                  </ActorKnownFor>
+                ))}
+              </ActorKnownForBox>
+            </ActorDescription>
+          </ActorLi>
+        ))}
+      </ActorList>
     </Main>
   );
 };

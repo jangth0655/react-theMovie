@@ -1,11 +1,15 @@
 import { signOut } from "firebase/auth";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase/firebase";
 import { isLogout } from "../slices/IsLoginSlice";
 import { useAppDispatch, useAppSelector } from "../store";
 import NavbarTap from "./NavbarTap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { isDark, isLight } from "../slices/DarkModeSlice";
 
 const Navbar = styled.nav`
   z-index: 1;
@@ -53,6 +57,7 @@ const Page = styled.ul`
 `;
 
 const LoginBtn = styled.button`
+  padding: 1.2em;
   background-color: transparent;
   border: 0;
   cursor: pointer;
@@ -72,6 +77,58 @@ const logoVariants = {
   },
 };
 
+const DarkMode = styled.div`
+  width: 20%;
+  height: 1em;
+  border: 1px solid ${(props) => props.theme.color.whiteColor};
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: space-between;
+`;
+
+const DarkModeBtn = styled(motion.div)`
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--border-radius);
+  width: 25%;
+  height: 100%;
+  background-color: white;
+`;
+
+const LightModeBtn = styled(motion.div)`
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--border-radius);
+  width: 25%;
+  height: 100%;
+  background-color: white;
+`;
+
+const ToggleBox = styled(motion.ul)`
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  top: 100%;
+  left: 0;
+  display: flex;
+  transform-origin: top center;
+`;
+
+const ToggleIcon = styled.div`
+  padding: 0.5em;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 1em;
+  font-size: var(--font-size-micro);
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
 export enum pageTap {
   Movie = "Movie",
   TV = "TV",
@@ -85,6 +142,10 @@ const tapContents = [
 ];
 
 const Nav = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const darkMode = useAppSelector((state) => state.DarkModeSlice.isDark);
+  const [showingItem, setShowingItem] = useState(false);
+  const [showingToggleIcon, setShowingToggleIcon] = useState(false);
   const login = useAppSelector((state) => state.IsLoginSlice.isLogin);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -97,6 +158,30 @@ const Nav = () => {
   const goHomePage = () => {
     navigate("/");
   };
+
+  useEffect(() => {
+    if (window.innerWidth > 768) {
+      setShowingItem(false);
+    }
+    if (window.innerWidth < 768) {
+      setShowingToggleIcon(true);
+    }
+    window.addEventListener("resize", () => {
+      window.innerWidth < 768
+        ? setShowingToggleIcon(true)
+        : setShowingToggleIcon(false);
+    });
+  }, []);
+
+  const onToggleItem = () => {
+    setShowingItem((pre) => !pre);
+  };
+
+  const onDark = () => {
+    setIsDarkMode((pre) => !pre);
+    isDarkMode ? dispatch(isDark(isDarkMode)) : dispatch(isLight(isDarkMode));
+  };
+  console.log(darkMode);
 
   return (
     <Navbar>
@@ -120,12 +205,36 @@ const Nav = () => {
         </Name>
       </ColOne>
       <ColTwo>
-        <Page>
-          {tapContents.map((tap, i) => (
-            <NavbarTap key={i} {...tap} />
-          ))}
-        </Page>
+        {showingToggleIcon ? (
+          <ToggleIcon>
+            <FontAwesomeIcon onClick={onToggleItem} icon={faBars} />
+          </ToggleIcon>
+        ) : (
+          <Page>
+            {tapContents.map((tap, i) => (
+              <NavbarTap key={i} {...tap} />
+            ))}
+          </Page>
+        )}
+        <AnimatePresence>
+          {showingItem && (
+            <ToggleBox
+              initial={{ scaleY: 0 }}
+              animate={{ scaleY: 1 }}
+              exit={{ scaleY: 0 }}
+            >
+              {tapContents.map((tap, i) => (
+                <NavbarTap key={i} {...tap}></NavbarTap>
+              ))}
+            </ToggleBox>
+          )}
+        </AnimatePresence>
         {login && <LoginBtn onClick={onLogout}>Logout</LoginBtn>}
+
+        <DarkMode onClick={onDark}>
+          {darkMode ? <DarkModeBtn /> : null}
+          {!darkMode ? <LightModeBtn /> : null}
+        </DarkMode>
       </ColTwo>
     </Navbar>
   );

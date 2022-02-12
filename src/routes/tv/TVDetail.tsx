@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { getTvVideo } from "../../actions/Video";
 import NoItems from "../../components/Noiitem";
 import { TvRecommendation } from "../../actions/RecommendationAPIs";
+import LoadingState from "../../components/LoadingState";
 
 const Main = styled.main``;
 
@@ -46,8 +47,8 @@ const TvIntro = styled.div`
 const TvPoster = styled(motion.div)`
   margin-right: var(--margin-size-meddle);
   flex: 30%;
-  width: 300px;
-  height: 500px;
+  width: 18em;
+  height: 31.25em;
   @media screen and (max-width: 48em) {
     flex: 40%;
   }
@@ -130,6 +131,7 @@ const VoteAverageScore = styled.div`
 `;
 
 const OverView = styled.p`
+  width: 60%;
   line-height: 1.4;
   color: ${(props) => props.theme.color.whiteColor};
   font-size: var(--font-size-small);
@@ -250,6 +252,7 @@ const TVDetails = () => {
   const dispatch = useAppDispatch();
   const tvVideo = useAppSelector((state) => state.VideoSlice.tvData);
   const tvDetailItem = useAppSelector((state) => state.Details.TvDetails);
+  const loading = useAppSelector((state) => state.Details.loadingState);
   useEffect(() => {
     dispatch(TvDetailPagesAPI(Number(tvMatch?.params.id)));
     dispatch(getTvVideo(Number(tvMatch?.params.id)));
@@ -273,7 +276,9 @@ const TVDetails = () => {
     });
   };
 
-  return (
+  return loading ? (
+    <LoadingState />
+  ) : (
     <Main>
       <SectionOne background={makeImage(tvDetailItem?.poster_path)}>
         <Cover>
@@ -303,7 +308,10 @@ const TVDetails = () => {
                 <VoteAverageScore>{tvDetailItem.vote_average}</VoteAverageScore>
               </VoteAverage>
               {tvDetailItem.overview ? (
-                <OverView>`${tvDetailItem.overview.slice(0, 120)}...`</OverView>
+                <OverView>{`${tvDetailItem.overview.slice(
+                  0,
+                  120
+                )}...`}</OverView>
               ) : (
                 <NoItems word="Sorry, There are no items" />
               )}

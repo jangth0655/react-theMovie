@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import App from "./App";
-import { lightTheme } from "./theme";
+
 import { Provider } from "react-redux";
 import { store } from "./store";
 import "./index.css";
 
 const GlobalStyle = createGlobalStyle`
-
 /* variable */
 #root {
 	/* font-size */
@@ -46,10 +45,8 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
+      <GlobalStyle />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { getMovieVideo } from "../../actions/Video";
 import { movieRecommendation } from "../../actions/RecommendationAPIs";
 import NoItems from "../../components/Noiitem";
+import LoadingState from "../../components/LoadingState";
 
 const Main = styled.main``;
 
@@ -130,6 +131,7 @@ const VoteAverageScore = styled.div`
 `;
 
 const OverView = styled.p`
+  width: 60%;
   line-height: 1.4;
   color: ${(props) => props.theme.color.whiteColor};
   font-size: var(--font-size-small);
@@ -254,6 +256,7 @@ const MovieDetail = () => {
   const dispatch = useAppDispatch();
   const movieVideo = useAppSelector((state) => state.VideoSlice.videoData);
   const movieDetailItem = useAppSelector((state) => state.Details.MovieDetails);
+  const loading = useAppSelector((state) => state.Details.loadingState);
   const RecommendationItems = useAppSelector(
     (state) => state.RecommendationSlice.movieData
   );
@@ -280,7 +283,9 @@ const MovieDetail = () => {
     });
   };
 
-  return (
+  return loading ? (
+    <LoadingState></LoadingState>
+  ) : (
     <Main>
       <SectionOne background={makeImage(movieDetailItem.poster_path)}>
         <Cover>

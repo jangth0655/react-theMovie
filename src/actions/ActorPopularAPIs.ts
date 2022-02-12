@@ -30,6 +30,6 @@ export const ActorAPIs = createAsyncThunk("data/actor", async (_, thunkAPI) => {
     );
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(`${error} 에러가 발생했습니다.`);
+    return thunkAPI.rejectWithValue(`${error}`);
   }
 });

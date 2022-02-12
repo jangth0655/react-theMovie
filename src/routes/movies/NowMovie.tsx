@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { movieNowPlaying } from "../../actions/NowplayingAPIs";
+import LoadingState from "../../components/LoadingState";
 import { useAppDispatch, useAppSelector } from "../../store";
 import makeImage from "../../utility/utility";
 
@@ -93,33 +94,29 @@ const NowMovie = () => {
     navigator(`/movie-detail/${id}`);
   };
 
-  return (
+  return loading ? (
+    <LoadingState></LoadingState>
+  ) : (
     <Main>
-      {loading ? (
-        "Loading..."
-      ) : (
-        <>
-          <MainTitle>현재 상영 영화</MainTitle>
-          <MovieList>
-            {nowMovies.map((item) => (
-              <MovieItem key={item.id}>
-                <ItemImage
-                  onClick={() => onDetailPage(item.id)}
-                  bgPoster={makeImage(item.poster_path)}
-                ></ItemImage>
-                <ItemDescription>
-                  <ItemTitle>{item.title}</ItemTitle>
-                  <ItemDate>{item.release_date}</ItemDate>
-                </ItemDescription>
-                <VoteAverage>
-                  <VoteAverageP>평점</VoteAverageP>
-                  <VoteAverageScore>{item.vote_average}</VoteAverageScore>
-                </VoteAverage>
-              </MovieItem>
-            ))}
-          </MovieList>
-        </>
-      )}
+      <MainTitle>현재 상영 영화</MainTitle>
+      <MovieList>
+        {nowMovies.map((item) => (
+          <MovieItem key={item.id}>
+            <ItemImage
+              onClick={() => onDetailPage(item.id)}
+              bgPoster={makeImage(item.poster_path)}
+            ></ItemImage>
+            <ItemDescription>
+              <ItemTitle>{item.title}</ItemTitle>
+              <ItemDate>{item.release_date}</ItemDate>
+            </ItemDescription>
+            <VoteAverage>
+              <VoteAverageP>평점</VoteAverageP>
+              <VoteAverageScore>{item.vote_average}</VoteAverageScore>
+            </VoteAverage>
+          </MovieItem>
+        ))}
+      </MovieList>
     </Main>
   );
 };

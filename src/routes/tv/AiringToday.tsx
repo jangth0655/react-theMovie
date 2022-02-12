@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AiringTodayAPIs } from "../../actions/AiringTodayAPIs";
+import LoadingState from "../../components/LoadingState";
 
 import { useAppDispatch, useAppSelector } from "../../store";
 import makeImage from "../../utility/utility";
@@ -100,33 +101,29 @@ const AiringToday = () => {
     navigator(`/tv-detail/${id}`);
   };
 
-  return (
+  return loading ? (
+    <LoadingState></LoadingState>
+  ) : (
     <Main>
-      {loading ? (
-        "Loading..."
-      ) : (
-        <>
-          <TvTitle>현재 방영 TV프로그램</TvTitle>
-          <TvList>
-            {airingTodayProgram.map((item) => (
-              <TvItem key={item.id}>
-                <ItemImage
-                  onClick={() => onDetailPage(item.id)}
-                  bgPoster={makeImage(item.poster_path)}
-                ></ItemImage>
-                <ItemDescription>
-                  <ItemTitle>{item.name}</ItemTitle>
-                  <ItemDate>{item.first_air_date}</ItemDate>
-                </ItemDescription>
-                <VoteAverage>
-                  <VoteAverageP>평점</VoteAverageP>
-                  <VoteAverageScore>{item.vote_average}</VoteAverageScore>
-                </VoteAverage>
-              </TvItem>
-            ))}
-          </TvList>
-        </>
-      )}
+      <TvTitle>현재 방영 TV프로그램</TvTitle>
+      <TvList>
+        {airingTodayProgram.map((item) => (
+          <TvItem key={item.id}>
+            <ItemImage
+              onClick={() => onDetailPage(item.id)}
+              bgPoster={makeImage(item.poster_path)}
+            ></ItemImage>
+            <ItemDescription>
+              <ItemTitle>{item.name}</ItemTitle>
+              <ItemDate>{item.first_air_date}</ItemDate>
+            </ItemDescription>
+            <VoteAverage>
+              <VoteAverageP>평점</VoteAverageP>
+              <VoteAverageScore>{item.vote_average}</VoteAverageScore>
+            </VoteAverage>
+          </TvItem>
+        ))}
+      </TvList>
     </Main>
   );
 };

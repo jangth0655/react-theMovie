@@ -8,6 +8,7 @@ import UpcomingSlice from "./slices/UpcomingSlice";
 import AiringTodaySlice from "./slices/AiringTodaySlice";
 import ActorSlice from "./slices/ActorSlice";
 import searchSlice from "./slices/searchSlice";
+import DarkModeSlice from "./slices/DarkModeSlice";
 import { combineReducers } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   AiringTodaySlice,
   ActorSlice,
   searchSlice,
+  DarkModeSlice,
 });
 
 export default reducer;
