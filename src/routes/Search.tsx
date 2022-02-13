@@ -32,6 +32,7 @@ const ItemImage = styled.div<{ bgPoster: string }>`
 const ItemDescription = styled.div`
   padding: var(--padding-size-meddle);
   flex: 80%;
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const ItemTitle = styled.p``;

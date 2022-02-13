@@ -18,6 +18,7 @@ const MainTitle = styled.p`
     font-size: var(--font-size-regular);
     text-align: center;
   }
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const MovieList = styled.ul`
@@ -35,6 +36,7 @@ const MovieList = styled.ul`
 
 const MovieItem = styled.li`
   padding: var(--padding-size-small);
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const ItemImage = styled.div<{ bgPoster: string }>`
@@ -66,6 +68,7 @@ const ItemDate = styled.p`
   margin-top: var(--margin-size-small);
   font-size: var(--font-size-micro);
   color: rgba(0, 0, 0, 0.5);
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const VoteAverage = styled.div`

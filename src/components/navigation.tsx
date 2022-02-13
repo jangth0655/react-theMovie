@@ -18,7 +18,7 @@ const Navbar = styled.nav`
   width: 100%;
   display: flex;
   align-items: center;
-  background-color: ${(props) => props.theme.color.darkColor};
+  background-color: ${(props) => props.theme.color.navbarColor};
   color: ${(props) => props.theme.color.whiteColor};
 `;
 
@@ -78,28 +78,18 @@ const logoVariants = {
 };
 
 const DarkMode = styled.div`
-  width: 20%;
+  width: 3em;
   height: 1em;
   border: 1px solid ${(props) => props.theme.color.whiteColor};
   border-radius: var(--border-radius);
   display: flex;
-  justify-content: space-between;
 `;
 
 const DarkModeBtn = styled(motion.div)`
   cursor: pointer;
   border: 0;
   border-radius: var(--border-radius);
-  width: 25%;
-  height: 100%;
-  background-color: white;
-`;
-
-const LightModeBtn = styled(motion.div)`
-  cursor: pointer;
-  border: 0;
-  border-radius: var(--border-radius);
-  width: 25%;
+  width: 30%;
   height: 100%;
   background-color: white;
 `;
@@ -115,7 +105,6 @@ const ToggleBox = styled(motion.ul)`
 `;
 
 const ToggleIcon = styled.div`
-  padding: 0.5em;
   cursor: pointer;
   display: flex;
   justify-content: flex-end;
@@ -160,16 +149,16 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    if (window.innerWidth > 768) {
-      setShowingItem(false);
-    }
     if (window.innerWidth < 768) {
       setShowingToggleIcon(true);
     }
     window.addEventListener("resize", () => {
-      window.innerWidth < 768
-        ? setShowingToggleIcon(true)
-        : setShowingToggleIcon(false);
+      if (window.innerWidth < 768) {
+        setShowingToggleIcon(true);
+        setShowingItem(false);
+      } else {
+        setShowingToggleIcon(false);
+      }
     });
   }, []);
 
@@ -181,7 +170,6 @@ const Nav = () => {
     setIsDarkMode((pre) => !pre);
     isDarkMode ? dispatch(isDark(isDarkMode)) : dispatch(isLight(isDarkMode));
   };
-  console.log(darkMode);
 
   return (
     <Navbar>
@@ -207,7 +195,11 @@ const Nav = () => {
       <ColTwo>
         {showingToggleIcon ? (
           <ToggleIcon>
-            <FontAwesomeIcon onClick={onToggleItem} icon={faBars} />
+            <FontAwesomeIcon
+              onClick={onToggleItem}
+              icon={faBars}
+              style={{ padding: "0.3em" }}
+            />
           </ToggleIcon>
         ) : (
           <Page>
@@ -217,7 +209,7 @@ const Nav = () => {
           </Page>
         )}
         <AnimatePresence>
-          {showingItem && (
+          {showingItem ? (
             <ToggleBox
               initial={{ scaleY: 0 }}
               animate={{ scaleY: 1 }}
@@ -227,13 +219,14 @@ const Nav = () => {
                 <NavbarTap key={i} {...tap}></NavbarTap>
               ))}
             </ToggleBox>
-          )}
+          ) : null}
         </AnimatePresence>
-        {login && <LoginBtn onClick={onLogout}>Logout</LoginBtn>}
 
-        <DarkMode onClick={onDark}>
-          {darkMode ? <DarkModeBtn /> : null}
-          {!darkMode ? <LightModeBtn /> : null}
+        {login && <LoginBtn onClick={onLogout}>Logout</LoginBtn>}
+        <DarkMode
+          style={{ justifyContent: darkMode ? "flex-end" : "flex-start" }}
+        >
+          <DarkModeBtn onClick={onDark} layout></DarkModeBtn>
         </DarkMode>
       </ColTwo>
     </Navbar>

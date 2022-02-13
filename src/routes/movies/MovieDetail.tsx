@@ -206,6 +206,7 @@ const RecommendationName = styled.p`
   @media screen and (max-width: 48em) {
     font-size: var(--font-size-regular);
   }
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const RecommendationList = styled.ul`
@@ -226,6 +227,7 @@ const RecommendationTitle = styled.p`
   @media screen and (max-width: 48em) {
     font-size: var(--font-size-small);
   }
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const RecommendationItem = styled.li`

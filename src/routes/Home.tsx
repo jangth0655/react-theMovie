@@ -17,26 +17,41 @@ const SectionOne = styled.section`
   align-items: center;
   margin-bottom: var(--margin-size-large);
   height: 60vh;
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const HomeImage = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   width: 100%;
   height: 100%;
-  background-image: url(https://cdn.dribbble.com/users/31629/screenshots/17102576/media/93d66dc088259f09424c91bc5ccb5472.png?compress=1&resize=800x600&vertical=top);
+  background-color: ${(props) => props.theme.color.darkColor};
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 `;
 
+const PosterTitle = styled.div`
+  width: 10em;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  font-size: 2em;
+  position: absolute;
+  background-image: url(images/bgImage.png);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: ${(props) => props.theme.color.whiteColor};
+`;
+
 const TitleBox = styled.div`
-  position: relative;
   margin-bottom: var(--margin-size-large);
 `;
 
-const Description = styled.h1`
+const PosterSubTitle = styled.h1`
   margin-top: var(--margin-size-meddle);
   font-weight: 600;
   font-style: italic;
@@ -45,7 +60,6 @@ const Description = styled.h1`
 `;
 
 const Form = styled.form`
-  position: relative;
   width: 70%;
   text-align: center;
   border: 2px solid ${(props) => props.theme.color.main};
@@ -62,6 +76,8 @@ const Input = styled.input`
   border-radius: 50px;
   border: 0;
   width: 70%;
+  background-color: transparent;
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const Button = styled.button`
@@ -72,6 +88,7 @@ const Button = styled.button`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const SectionTwo = styled.section`
@@ -87,6 +104,7 @@ const SlideName = styled.p`
   @media screen and (max-width: 48em) {
     font-size: var(--font-size-regular);
   }
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const Slide = styled.div``;
@@ -102,6 +120,7 @@ const RowItem = styled.div`
   align-items: center;
   margin-right: var(--margin-size-meddle);
   padding: 2em 0;
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const ItemImg = styled.div<{ bgPoster: string }>`
@@ -136,6 +155,7 @@ const ItemRelease = styled.p`
   margin-top: var(--margin-size-small);
   font-size: var(--font-size-micro);
   color: rgba(0, 0, 0, 0.5);
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 interface IValue {
@@ -168,7 +188,7 @@ const Home = () => {
   };
 
   const onTvDetail = (id: number) => {
-    navigator(`tvs/tv-detail/${id}`);
+    navigator(`/tv-detail/${id}`);
     dispatch(TvDetailPagesAPI(id));
   };
 
@@ -182,8 +202,9 @@ const Home = () => {
     <Main>
       <SectionOne>
         <HomeImage>
+          <PosterTitle></PosterTitle>
           <TitleBox>
-            <Description>Shoot for the moon</Description>
+            <PosterSubTitle>Shoot for the moon</PosterSubTitle>
           </TitleBox>
         </HomeImage>
         <Form onSubmit={handleSubmit<IValue>(onValid)}>

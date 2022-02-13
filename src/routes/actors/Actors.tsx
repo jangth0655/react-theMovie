@@ -18,6 +18,7 @@ const MainTitle = styled.p`
     font-size: var(--font-size-regular);
     text-align: center;
   }
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const ActorList = styled.ul`
@@ -65,6 +66,7 @@ const ActorName = styled.p`
   width: 100%;
   font-weight: 600;
   font-size: var(--font-size-micro);
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const ActorKnownForBox = styled.ul`
@@ -79,6 +81,7 @@ const ActorKnownFor = styled.li`
   display: flex;
   font-size: var(--font-size-micro);
   color: rgba(0, 0, 0, 0.6);
+  color: ${(props) => props.theme.color.mainFontColor};
 `;
 
 const Actors = () => {
