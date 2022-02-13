@@ -8,6 +8,7 @@ import { SearchAPIs } from "../actions/SearchAPIs";
 import LoadingState from "../components/LoadingState";
 import { useAppDispatch, useAppSelector } from "../store";
 import makeImage from "../utility/utility";
+import TitleImage from "../bgImage.png";
 
 const Main = styled.main``;
 
@@ -40,7 +41,7 @@ const PosterTitle = styled.div`
   bottom: 0;
   font-size: 2em;
   position: absolute;
-  background-image: url(images/bgImage.png);
+  background-image: url(${TitleImage});
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
