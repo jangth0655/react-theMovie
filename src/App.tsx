@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -27,6 +26,7 @@ const Main = styled.main`
 function App() {
   const darkMode = useAppSelector((state) => state.DarkModeSlice.isDark);
   const login = useAppSelector((state) => state.IsLoginSlice.isLogin);
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Main>

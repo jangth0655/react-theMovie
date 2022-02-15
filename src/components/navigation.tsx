@@ -89,7 +89,7 @@ const DarkModeBtn = styled(motion.div)`
   cursor: pointer;
   border: 0;
   border-radius: var(--border-radius);
-  width: 30%;
+  width: 50%;
   height: 100%;
   background-color: white;
 `;
@@ -155,7 +155,6 @@ const Nav = () => {
     window.addEventListener("resize", () => {
       if (window.innerWidth < 768) {
         setShowingToggleIcon(true);
-        setShowingItem(false);
       } else {
         setShowingToggleIcon(false);
       }
