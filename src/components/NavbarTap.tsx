@@ -11,7 +11,7 @@ interface ITapContents {
 }
 
 const PageLi = styled(motion.li)`
-  padding: 1.2em;
+  padding: 1.5em;
   position: relative;
   margin: auto;
   font-size: var(--font-size-micro);

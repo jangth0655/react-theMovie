@@ -118,16 +118,25 @@ const ToggleIcon = styled.div`
   }
 `;
 
+export type PageTap = {
+  id: "Movie" | "TV" | "Actor";
+  one: "현재 상영" | "현재 방영" | "인기 배우";
+  two?: "계봉 예정" | "오늘 방영";
+};
+
 export enum pageTap {
   Movie = "Movie",
   TV = "TV",
   Actor = "Actor",
 }
 
-const tapContents = [
-  { id: pageTap.Movie, one: "현재 상영", two: "계봉 예정" },
+const tapContents: PageTap[] = [
+  { id: "Movie", one: "현재 상영", two: "계봉 예정" },
+  { id: "TV", one: "현재 방영", two: "오늘 방영" },
+  { id: "Actor", one: "인기 배우" },
+  /* { id: pageTap.Movie, one: "현재 상영", two: "계봉 예정" },
   { id: pageTap.TV, one: "현재 방영", two: "오늘 방영" },
-  { id: pageTap.Actor, one: "인기 배우" },
+  { id: pageTap.Actor, one: "인기 배우" }, */
 ];
 
 const Nav = () => {

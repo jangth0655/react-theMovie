@@ -4,7 +4,7 @@
 
 ### Skills
 
-- React, Typescript, styled-components, firebase, Redux, motion
+- React, Typescript, styled-components, Redux, motion
 
 ### Feature / Description
 
