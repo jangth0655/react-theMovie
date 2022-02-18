@@ -47,7 +47,7 @@ export const Details = createSlice({
       }
     );
     builder.addCase(TvDetailPagesAPI.rejected, (state, action) => {
-      state.loadingState = false;
+      state.loadingState = true;
     });
   },
 });

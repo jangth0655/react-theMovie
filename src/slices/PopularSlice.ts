@@ -34,7 +34,9 @@ export const popularSlice = createSlice({
         state.loadingState = false;
       }
     );
-    builder.addCase(getPopularMovies.rejected, (state, action) => {});
+    builder.addCase(getPopularMovies.rejected, (state, action) => {
+      state.loadingState = true;
+    });
     // tv
     builder.addCase(
       getPopularTV.pending,
@@ -49,7 +51,9 @@ export const popularSlice = createSlice({
         state.loadingState = false;
       }
     );
-    builder.addCase(getPopularTV.rejected, (state, action) => {});
+    builder.addCase(getPopularTV.rejected, (state, action) => {
+      state.loadingState = true;
+    });
   },
 });
 

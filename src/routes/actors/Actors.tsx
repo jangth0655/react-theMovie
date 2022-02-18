@@ -86,9 +86,9 @@ const ActorKnownFor = styled.li`
 
 const Actors = () => {
   const dispatch = useAppDispatch();
-  //const errors = useAppSelector((state) => state.ActorSlice.error);
   const actors = useAppSelector((state) => state.ActorSlice.actorData);
   const loading = useAppSelector((state) => state.ActorSlice.loadingState);
+
   useEffect(() => {
     dispatch(ActorAPIs());
   }, [dispatch]);

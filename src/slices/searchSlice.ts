@@ -24,7 +24,9 @@ export const SearchSlice = createSlice({
         state.loadingState = false;
       }
     );
-    builder.addCase(SearchAPIs.rejected, (state, action) => {});
+    builder.addCase(SearchAPIs.rejected, (state, action) => {
+      state.loadingState = true;
+    });
   },
 });
 

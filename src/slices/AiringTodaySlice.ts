@@ -27,7 +27,9 @@ export const AiringTodaySlice = createSlice({
         state.tvData = [...action.payload.results];
       }
     );
-    builder.addCase(AiringTodayAPIs.rejected, (state, action) => {});
+    builder.addCase(AiringTodayAPIs.rejected, (state, action) => {
+      state.loadingState = true;
+    });
   },
 });
 

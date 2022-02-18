@@ -51,7 +51,9 @@ export const RecommendationSlice = createSlice({
         state.loadingState = false;
       }
     );
-    builder.addCase(TvRecommendation.rejected, (state, action) => {});
+    builder.addCase(TvRecommendation.rejected, (state, action) => {
+      state.loadingState = true;
+    });
   },
 });
 

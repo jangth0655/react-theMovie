@@ -45,7 +45,9 @@ const VideoSlice = createSlice({
         state.loadingState = false;
       }
     );
-    builder.addCase(getTvVideo.rejected, (state, action) => {});
+    builder.addCase(getTvVideo.rejected, (state, action) => {
+      state.loadingState = true;
+    });
   },
 });
 

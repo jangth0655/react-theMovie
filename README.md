@@ -12,7 +12,6 @@
 
 ### Specific Feature
 
-- `Login` : google, github를 통해 로그인
 - `Navigation` : movie, tv, actors 구분
 - `Home` : 인기있는 영화, TV프로그램 리스트
 - `Detail` : 해당 프로그램 타이틀, 릴리즈 연도, 줄거리, 트레일로 등 상세페이지

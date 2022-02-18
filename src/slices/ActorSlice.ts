@@ -33,6 +33,7 @@ export const ActorSlice = createSlice({
     );
     builder.addCase(ActorAPIs.rejected, (state, action: PayloadAction<any>) => {
       state.error = action.payload;
+      state.loadingState = true;
     });
   },
 });

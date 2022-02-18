@@ -26,7 +26,9 @@ export const UpcomingSlice = createSlice({
         state.loadingState = false;
       }
     );
-    builder.addCase(movieUpComing.rejected, (state, action) => {});
+    builder.addCase(movieUpComing.rejected, (state, action) => {
+      state.loadingState = true;
+    });
   },
 });
 

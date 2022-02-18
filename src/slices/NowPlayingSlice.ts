@@ -32,7 +32,9 @@ export const NowPlayingSlice = createSlice({
         state.movieData = [...action.payload.results];
       }
     );
-    builder.addCase(movieNowPlaying.rejected, (state, action) => {});
+    builder.addCase(movieNowPlaying.rejected, (state, action) => {
+      state.loadingState = true;
+    });
 
     //tv
     builder.addCase(
