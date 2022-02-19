@@ -1,14 +1,8 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { pageTap } from "./navigation";
-
-interface ITapContents {
-  id: string;
-  one: string;
-  two?: string;
-}
+import { PageTap, pageTap } from "./navigation";
 
 const PageLi = styled(motion.li)`
   padding: 1.5em;
@@ -54,7 +48,7 @@ const TapContents = styled.p`
   }
 `;
 
-const NavbarTap = ({ ...tap }: ITapContents) => {
+const NavbarTap = memo(({ ...tap }: PageTap) => {
   const [showingContents, setShowingContents] = useState(false);
   const navigate = useNavigate();
   const onTap = () => {
@@ -113,5 +107,5 @@ const NavbarTap = ({ ...tap }: ITapContents) => {
       )}
     </PageLi>
   );
-};
+});
 export default NavbarTap;

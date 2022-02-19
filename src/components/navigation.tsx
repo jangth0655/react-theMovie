@@ -1,6 +1,6 @@
 import { signOut } from "firebase/auth";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase/firebase";
@@ -134,12 +134,9 @@ const tapContents: PageTap[] = [
   { id: "Movie", one: "현재 상영", two: "계봉 예정" },
   { id: "TV", one: "현재 방영", two: "오늘 방영" },
   { id: "Actor", one: "인기 배우" },
-  /* { id: pageTap.Movie, one: "현재 상영", two: "계봉 예정" },
-  { id: pageTap.TV, one: "현재 방영", two: "오늘 방영" },
-  { id: pageTap.Actor, one: "인기 배우" }, */
 ];
 
-const Nav = () => {
+const Nav = memo(() => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const darkMode = useAppSelector((state) => state.DarkModeSlice.isDark);
   const [showingItem, setShowingItem] = useState(false);
@@ -239,5 +236,5 @@ const Nav = () => {
       </ColTwo>
     </Navbar>
   );
-};
+});
 export default Nav;

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -183,15 +183,21 @@ const Home = () => {
     dispatch(getPopularTV());
   }, [dispatch]);
 
-  const onMovieDetail = (id: number) => {
-    navigator(`/movie-detail/${id}`);
-    dispatch(MovieDeTailPagesAPI(id));
-  };
+  const onMovieDetail = useCallback(
+    (id: number) => {
+      navigator(`/movie-detail/${id}`);
+      dispatch(MovieDeTailPagesAPI(id));
+    },
+    [dispatch, navigator]
+  );
 
-  const onTvDetail = (id: number) => {
-    navigator(`/tv-detail/${id}`);
-    dispatch(TvDetailPagesAPI(id));
-  };
+  const onTvDetail = useCallback(
+    (id: number) => {
+      navigator(`/tv-detail/${id}`);
+      dispatch(TvDetailPagesAPI(id));
+    },
+    [dispatch, navigator]
+  );
 
   const onValid = (data: IValue) => {
     setValue("value", "");

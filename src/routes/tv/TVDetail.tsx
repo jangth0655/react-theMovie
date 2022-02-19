@@ -277,7 +277,6 @@ const TVDetails = () => {
       inline: "end",
     });
   };
-
   return loading ? (
     <LoadingState />
   ) : (
