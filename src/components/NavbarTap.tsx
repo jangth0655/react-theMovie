@@ -27,24 +27,22 @@ const TapBox = styled(motion.div)`
   align-items: center;
   justify-content: center;
   margin-top: 0.5em;
+  margin-left: -1px;
   border: 1px solid black;
-  border-radius: 10px;
   transform-origin: top center;
-  & hr {
-    width: 80%;
-  }
 `;
 
 const TapContents = styled.p`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  padding: var(--padding-size-small);
+  padding: var(--padding-size-small) 0;
   font-size: var(--font-size-micro);
   color: black;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    color: ${(props) => props.theme.color.whiteColor};
+    background-color: rgba(0, 0, 0, 0.7);
   }
 `;
 

@@ -51,6 +51,11 @@ const ItemImage = styled.div<{ bgPoster: string }>`
   background-repeat: no-repeat;
   border-radius: var(--border-radius);
   margin-bottom: var(--margin-size-small);
+  transition: all 0.2s ease-in;
+  &:hover {
+    transform: scale(1.1);
+    transform: translateY(-10px);
+  }
 `;
 
 const ItemDescription = styled.div`

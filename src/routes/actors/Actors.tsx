@@ -40,6 +40,11 @@ const ActorLi = styled.li`
   box-shadow: 0px 5px 9px 0px #000000;
   border-radius: var(--border-radius);
   margin-bottom: var(--margin-size-small);
+  transition: all 0.2s ease-in;
+  &:hover {
+    transform: scale(1.1);
+    transform: translateY(-10px);
+  }
 `;
 
 const ActorImage = styled.div<{ bgPoster: string }>`

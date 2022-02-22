@@ -229,6 +229,11 @@ const RecommendationItem = styled.li`
   align-items: center;
   margin-right: var(--margin-size-meddle);
   padding: 2em 0;
+  transition: all 0.2s ease-in;
+  &:hover {
+    transform: scale(1.1);
+    transform: translateY(-10px);
+  }
 `;
 
 const RecommendationItemImage = styled.div<{ bgPoster: string }>`

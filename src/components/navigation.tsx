@@ -30,7 +30,7 @@ const ColOne = styled.div`
 
 const ColTwo = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   flex: 60%;
 `;
@@ -51,13 +51,11 @@ const Name = styled.div`
 
 const Page = styled.ul`
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
   width: 70%;
 `;
 
 const LoginBtn = styled.button`
-  padding: 1.2em;
   background-color: transparent;
   border: 0;
   cursor: pointer;
