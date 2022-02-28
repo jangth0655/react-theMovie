@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import makeImage, { playVideo } from "../../utility/utility";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { getTvVideo } from "../../actions/Video";
 import NoItems from "../../components/Noiitem";
@@ -248,6 +249,48 @@ const RecommendationItemImage = styled.div<{ bgPoster: string }>`
   margin-bottom: var(--margin-size-small);
 `;
 
+const LeftDirection = styled.div`
+  width: 1.7em;
+  height: 1.7em;
+  top: 87%;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.color.whiteColor};
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
+const RightDirection = styled.div`
+  width: 1.7em;
+  height: 1.7em;
+  top: 87%;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.color.whiteColor};
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
 const TVDetails = () => {
   const titleRef = useRef<HTMLParagraphElement>(null);
   const navigator = useNavigate();
@@ -265,6 +308,16 @@ const TVDetails = () => {
     dispatch(getTvVideo(Number(tvMatch?.params.id)));
     dispatch(TvRecommendation(Number(tvMatch?.params.id)));
   }, [dispatch, tvMatch?.params.id]);
+
+  const listRef = useRef<HTMLUListElement>(null);
+
+  const onRightDirection = () => {
+    listRef.current?.scrollBy({ left: 500, behavior: "smooth" });
+  };
+
+  const onLeftDirection = () => {
+    listRef.current?.scrollBy({ left: -500, behavior: "smooth" });
+  };
 
   const onVideoPlay = () => {
     setPlay(true);
@@ -350,7 +403,13 @@ const TVDetails = () => {
         {RecommendationItems ? (
           <Recommendation>
             <RecommendationName>Recommendation</RecommendationName>
-            <RecommendationList>
+            <RecommendationList ref={listRef}>
+              <RightDirection onClick={onRightDirection}>
+                <FontAwesomeIcon
+                  style={{ fontSize: "1.5em" }}
+                  icon={faCaretRight}
+                />
+              </RightDirection>
               {RecommendationItems.map((item) => (
                 <RecommendationItem key={item.id}>
                   <RecommendationItemImage
@@ -362,6 +421,12 @@ const TVDetails = () => {
                   </RecommendationDescription>
                 </RecommendationItem>
               ))}
+              <LeftDirection onClick={onLeftDirection}>
+                <FontAwesomeIcon
+                  style={{ fontSize: "1.5em" }}
+                  icon={faCaretLeft}
+                />
+              </LeftDirection>
             </RecommendationList>
           </Recommendation>
         ) : (

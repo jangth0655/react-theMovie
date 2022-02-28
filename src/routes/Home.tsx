@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -9,6 +9,8 @@ import LoadingState from "../components/LoadingState";
 import { useAppDispatch, useAppSelector } from "../store";
 import makeImage from "../utility/utility";
 import TitleImage from "../bgImage.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 const Main = styled.main``;
 
@@ -164,6 +166,90 @@ const ItemRelease = styled.p`
   color: ${(props) => props.theme.color.mainFontColor};
 `;
 
+const LeftMovieDirection = styled.div`
+  width: 1.7em;
+  height: 1.7em;
+  top: 70%;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.color.whiteColor};
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
+const RightMovieDirection = styled.div`
+  width: 1.7em;
+  height: 1.7em;
+  top: 70%;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.color.whiteColor};
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
+const LeftTvDirection = styled.div`
+  width: 1.7em;
+  height: 1.7em;
+  top: 170%;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.color.whiteColor};
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
+const RightTvDirection = styled.div`
+  width: 1.7em;
+  height: 1.7em;
+  top: 170%;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.color.whiteColor};
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
 interface IValue {
   value: string;
 }
@@ -182,6 +268,23 @@ const Home = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IValue>();
+
+  const movieDirection = useRef<HTMLDivElement>(null);
+  const tvDirection = useRef<HTMLDivElement>(null);
+
+  const onMovieLeft = () => {
+    movieDirection.current?.scrollBy({ left: -500, behavior: "smooth" });
+  };
+  const onMovieRight = () => {
+    movieDirection.current?.scrollBy({ left: 500, behavior: "smooth" });
+  };
+
+  const onTvLeft = () => {
+    tvDirection.current?.scrollBy({ left: -500, behavior: "smooth" });
+  };
+  const onTvRight = () => {
+    tvDirection.current?.scrollBy({ left: 500, behavior: "smooth" });
+  };
 
   useEffect(() => {
     dispatch(getPopularMovies());
@@ -240,7 +343,13 @@ const Home = () => {
           <SlideBox>
             <SlideName>Popular Movies</SlideName>
             <Slide>
-              <RowItems>
+              <RowItems ref={movieDirection}>
+                <RightMovieDirection onClick={onMovieRight}>
+                  <FontAwesomeIcon
+                    style={{ fontSize: "1.5em" }}
+                    icon={faCaretRight}
+                  />
+                </RightMovieDirection>
                 {popularMovies.map((movie) => (
                   <RowItem key={movie.id}>
                     <ItemImg
@@ -253,6 +362,12 @@ const Home = () => {
                     </ItemDescription>
                   </RowItem>
                 ))}
+                <LeftMovieDirection onClick={onMovieLeft}>
+                  <FontAwesomeIcon
+                    style={{ fontSize: "1.5em" }}
+                    icon={faCaretLeft}
+                  />
+                </LeftMovieDirection>
               </RowItems>
             </Slide>
             {/* tvs */}
@@ -260,7 +375,13 @@ const Home = () => {
           <SlideBox>
             <SlideName>Popular TV Programs</SlideName>
             <Slide>
-              <RowItems>
+              <RowItems ref={tvDirection}>
+                <RightTvDirection onClick={onTvRight}>
+                  <FontAwesomeIcon
+                    style={{ fontSize: "1.5em" }}
+                    icon={faCaretRight}
+                  />
+                </RightTvDirection>
                 {popularTVs.map((tv) => (
                   <RowItem key={tv.id} onClick={() => onTvDetail(tv.id)}>
                     <ItemImg
@@ -272,6 +393,12 @@ const Home = () => {
                     </ItemDescription>
                   </RowItem>
                 ))}
+                <LeftTvDirection onClick={onTvLeft}>
+                  <FontAwesomeIcon
+                    style={{ fontSize: "1.5em" }}
+                    icon={faCaretLeft}
+                  />
+                </LeftTvDirection>
               </RowItems>
             </Slide>
           </SlideBox>

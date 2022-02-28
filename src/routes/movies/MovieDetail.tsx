@@ -4,13 +4,14 @@ import styled from "styled-components";
 import { MovieDeTailPagesAPI } from "../../actions/DetailPage";
 import { useAppDispatch, useAppSelector } from "../../store";
 import makeImage, { playVideo } from "../../utility/utility";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { getMovieVideo } from "../../actions/Video";
 import { movieRecommendation } from "../../actions/RecommendationAPIs";
 import NoItems from "../../components/Noiitem";
 import LoadingState from "../../components/LoadingState";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 const Main = styled.main``;
 
@@ -255,6 +256,48 @@ const RecommendationItemImage = styled.div<{ bgPoster: string }>`
   }
 `;
 
+const LeftDirection = styled.div`
+  width: 1.7em;
+  height: 1.7em;
+  top: 87%;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.color.whiteColor};
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
+const RightDirection = styled.div`
+  width: 1.7em;
+  height: 1.7em;
+  top: 87%;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.color.whiteColor};
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: ${(props) => props.theme.color.active};
+  }
+`;
+
 const MovieDetail = () => {
   const titleRef = useRef<HTMLParagraphElement>(null);
   const navigator = useNavigate();
@@ -267,6 +310,16 @@ const MovieDetail = () => {
   const RecommendationItems = useAppSelector(
     (state) => state.RecommendationSlice.movieData
   );
+  const listRef = useRef<HTMLUListElement>(null);
+
+  const onRightDirection = () => {
+    listRef.current?.scrollBy({ left: 500, behavior: "smooth" });
+  };
+
+  const onLeftDirection = () => {
+    listRef.current?.scrollBy({ left: -500, behavior: "smooth" });
+  };
+
   useEffect(() => {
     dispatch(MovieDeTailPagesAPI(Number(movieMatch?.params.id)));
     dispatch(getMovieVideo(Number(movieMatch?.params.id)));
@@ -361,7 +414,13 @@ const MovieDetail = () => {
         {RecommendationItems ? (
           <Recommendation>
             <RecommendationName>Recommendation</RecommendationName>
-            <RecommendationList>
+            <RecommendationList ref={listRef}>
+              <RightDirection onClick={onRightDirection}>
+                <FontAwesomeIcon
+                  style={{ fontSize: "1.5em" }}
+                  icon={faCaretRight}
+                />
+              </RightDirection>
               {RecommendationItems.map((item) => (
                 <RecommendationItem key={item.id}>
                   <RecommendationItemImage
@@ -373,6 +432,12 @@ const MovieDetail = () => {
                   </RecommendationDescription>
                 </RecommendationItem>
               ))}
+              <LeftDirection onClick={onLeftDirection}>
+                <FontAwesomeIcon
+                  style={{ fontSize: "1.5em" }}
+                  icon={faCaretLeft}
+                />
+              </LeftDirection>
             </RecommendationList>
           </Recommendation>
         ) : (
